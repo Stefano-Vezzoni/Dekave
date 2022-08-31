@@ -1,0 +1,15 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-DekaveApplication<dekave>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.dekaveenvelopamentos.dekave.DekaveApplication",
+            "projectName": "dekave",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
