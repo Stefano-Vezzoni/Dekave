@@ -22,7 +22,7 @@ import com.dekaveenvelopamentos.dekave.dto.ContactNumberDTO;
 import com.dekaveenvelopamentos.dekave.service.ContactNumberService;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api/v1")
 public class ContactNumbersController {
 
     @Autowired
@@ -34,10 +34,10 @@ public class ContactNumbersController {
         return service.getById(id);
     }
 
-    @GetMapping("/contactnumbers/all")
+    @GetMapping("/contactnumbers/{page}/{size}")
     @ResponseStatus(HttpStatus.OK)
-    public List<ContactNumbers> getAllContactNumbers() {
-        return service.getAll();
+    public List<ContactNumbers> getAllContactNumbers(Integer page, Integer size) {
+        return service.getContactNumbers(page, size);
     }
 
     @PostMapping("/contactnumbers/save")

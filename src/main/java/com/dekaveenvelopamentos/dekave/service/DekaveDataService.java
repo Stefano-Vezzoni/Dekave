@@ -3,18 +3,71 @@ package com.dekaveenvelopamentos.dekave.service;
 import java.util.List;
 import java.util.UUID;
 
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
 import com.dekaveenvelopamentos.dekave.domain.entity.DekaveData;
+import com.dekaveenvelopamentos.dekave.domain.repository.DekaveDataRepository;
 import com.dekaveenvelopamentos.dekave.dto.DataDTO;
 
-public interface DekaveDataService {
+@Service
+public class DekaveDataService {
 
-    DekaveData getById(UUID id);
+    @Autowired
+    private DekaveDataRepository repository;
 
-    List<DekaveData> getAll();
+    @Autowired
+    private GenericService genericService;
 
-    void saveDekaveData(DataDTO dataDTO);
+    public DekaveData getById(UUID id) {
+        return repository.findById(id).get();
+    }
 
-    void updateDekaveData(UUID id, DataDTO dataDTO);
+    public List<DekaveData> getDekaveData(Integer page, Integer size) {
 
-    void deleteById(UUID id);
+        Pageable pageable = genericService.pageable(page, size);
+
+        return repository.findAll(pageable).getContent();
+    }
+
+    @Transactional
+    public void saveDekaveData(DataDTO dataDTO) {
+
+        DekaveData dekaveData = new DekaveData();
+
+        dekaveData.setName(dataDTO.getName());
+        dekaveData.setLocation(dataDTO.getLocation());
+        dekaveData.setCopyright(dataDTO.getCopyright());
+        dekaveData.setContact_message(dataDTO.getContactMessage());
+
+        repository.save(dekaveData);
+    }
+
+    @Transactional
+    public void updateDekaveData(UUID id, DataDTO dataDTO) {
+
+        DekaveData dekaveData = repository.getById(id);
+
+        if (dataDTO.getName() != null) {
+            dekaveData.setName(dataDTO.getName());
+        }
+        if (dataDTO.getLocation() != null) {
+            dekaveData.setLocation(dataDTO.getLocation());
+        }
+        if (dataDTO.getCopyright() != null) {
+            dekaveData.setCopyright(dataDTO.getCopyright());
+        }
+        if (dataDTO.getContactMessage() != null) {
+            dekaveData.setContact_message(dataDTO.getContactMessage());
+        }
+    }
+
+    @Transactional
+    public void deleteById(UUID id) {
+        repository.deleteById(id);
+    }
+
 }

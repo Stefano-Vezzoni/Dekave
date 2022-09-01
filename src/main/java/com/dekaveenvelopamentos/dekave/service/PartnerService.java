@@ -3,23 +3,97 @@ package com.dekaveenvelopamentos.dekave.service;
 import java.util.List;
 import java.util.UUID;
 
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dekaveenvelopamentos.dekave.domain.entity.Partners;
+import com.dekaveenvelopamentos.dekave.domain.repository.PartnersRepository;
 import com.dekaveenvelopamentos.dekave.dto.ActiveDTO;
 import com.dekaveenvelopamentos.dekave.dto.PartnersDTO;
 
-public interface PartnerService {
+@Service
+public class PartnerService {
 
-    Partners getById(UUID id);
+    @Value("${images.folder.partners}")
+    private String path;
 
-    List<Partners> findAll();
+    @Autowired
+    private PartnersRepository repository;
 
-    void activeById(UUID id, ActiveDTO activeDTO);
+    @Autowired
+    private FileService fileService;
 
-    void savePartner(PartnersDTO partnersDTO, MultipartFile file);
+    @Autowired
+    private GenericService genericService;
 
-    void updatePartner(UUID id, PartnersDTO partnersDTO, MultipartFile file);
+    public Partners getById(UUID id) {
+        return repository.findById(id).get();
+    }
 
-    void deleteById(UUID id);
+    public List<Partners> getPartners(Integer page, Integer size) {
+
+        Pageable pageable = genericService.pageableAndSort(page, size, "partnerOrder");
+
+        return repository.findAll(pageable).getContent();
+    }
+
+    @Transactional
+    public void activeById(UUID id, ActiveDTO activeDTO) {
+
+        Partners partner = repository.getById(id);
+
+        if (activeDTO.getActive() == true) {
+            partner.setActive(true);
+        }
+        if (activeDTO.getActive() == false) {
+            partner.setActive(false);
+        }
+    }
+
+    @Transactional
+    public void savePartner(PartnersDTO partnersDTO, MultipartFile file) {
+
+        Partners partner = new Partners();
+
+        partner.setName(partnersDTO.getName());
+        partner.setActive(true);
+        partner.setPartnerOrder(repository.count() + 1);
+        partner.setLogo(fileService.uploadImage(path, file));
+
+        repository.save(partner);
+    }
+
+    @Transactional
+    public void updatePartner(UUID id, PartnersDTO partnersDTO, MultipartFile file) {
+
+        Partners partner = repository.getById(id);
+
+        if (partnersDTO.getName() != null) {
+            partner.setName(partnersDTO.getName());
+        }
+        if (file != null) {
+            fileService.deleteFile(partner.getLogo());
+            partner.setLogo(fileService.uploadImage(path, file));
+        }
+    }
+
+    @Transactional
+    public void deleteById(UUID id) {
+
+        fileService.deleteFile(repository.findById(id).get().getLogo());
+        repository.deleteById(id);
+
+        Long index = 1L;
+        List<Partners> partners = repository.findAll(Sort.by("partnerOrder"));
+
+        for (Partners partner : partners) {
+            partner.setPartnerOrder(index++);
+        }
+    }
 }

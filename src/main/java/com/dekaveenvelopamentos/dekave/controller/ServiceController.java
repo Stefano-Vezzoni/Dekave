@@ -9,8 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +26,7 @@ import com.dekaveenvelopamentos.dekave.dto.ServicesDTO;
 import com.dekaveenvelopamentos.dekave.service.ServiceService;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api/v1")
 public class ServiceController {
 
     @Autowired
@@ -37,10 +38,10 @@ public class ServiceController {
         return service.getById(id);
     }
 
-    @GetMapping("/services/all")
+    @GetMapping("/services/{page}/{size}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Services> getServices(@RequestHeader UUID id) {
-        return service.findAllByServiceTypeId(id);
+    public List<Services> getServices(@RequestHeader UUID id, @PathVariable Integer page, @PathVariable Integer size) {
+        return service.getServicesByServiceTypeId(id, page, size);
     }
 
     @PostMapping(value = "/services/save", consumes = { "multipart/form-data" })
@@ -50,14 +51,14 @@ public class ServiceController {
         service.saveService(id, servicesDTO, file);
     }
 
-    @PatchMapping("/services/update")
+    @PutMapping("/services/update")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateService(@RequestHeader UUID id, @RequestPart("service") ServicesDTO servicesDTO,
             @RequestPart("file") MultipartFile file) {
         service.updateService(id, servicesDTO, file);
     }
 
-    @PatchMapping("/services/active")
+    @PutMapping("/services/active")
     @ResponseStatus(HttpStatus.OK)
     public void activateById(@RequestHeader UUID id, @RequestBody @Valid ActiveDTO activeDTO) {
         service.activeById(id, activeDTO);
@@ -68,5 +69,4 @@ public class ServiceController {
     public void deleteServiceById(@RequestHeader UUID id) {
         service.deleteById(id);
     }
-
 }

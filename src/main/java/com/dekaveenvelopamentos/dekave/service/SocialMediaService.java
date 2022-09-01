@@ -3,21 +3,81 @@ package com.dekaveenvelopamentos.dekave.service;
 import java.util.List;
 import java.util.UUID;
 
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
 import com.dekaveenvelopamentos.dekave.domain.entity.SocialMedias;
+import com.dekaveenvelopamentos.dekave.domain.repository.SocialMediasRepository;
 import com.dekaveenvelopamentos.dekave.dto.ActiveDTO;
 import com.dekaveenvelopamentos.dekave.dto.SocialMediaDTO;
 
-public interface SocialMediaService {
+@Service
+public class SocialMediaService {
 
-    SocialMedias getById(UUID id);
+    @Autowired
+    private SocialMediasRepository repository;
 
-    List<SocialMedias> getAll();
+    @Autowired
+    private GenericService genericService;
 
-    void activeById(UUID id, ActiveDTO activeDTO);
+    public SocialMedias getById(UUID id) {
+        return repository.findById(id).get();
+    }
 
-    void saveSocialMedia(SocialMediaDTO socialMediaDTO);
+    public List<SocialMedias> getSocialMedias(Integer page, Integer size) {
 
-    void updateSocialMedia(UUID id, SocialMediaDTO socialMediaDTO);
+        Pageable pageable = genericService.pageable(page, size);
 
-    void deleteById(UUID id);
+        return repository.findAll(pageable).getContent();
+    }
+
+    @Transactional
+    public void activeById(UUID id, ActiveDTO activeDTO) {
+
+        SocialMedias socialMedia = repository.getById(id);
+
+        if (activeDTO.getActive() == true) {
+            socialMedia.setActive(true);
+        }
+        if (activeDTO.getActive() == false) {
+            socialMedia.setActive(false);
+        }
+    }
+
+    @Transactional
+    public void saveSocialMedia(SocialMediaDTO socialMediaDTO) {
+
+        SocialMedias socialMedias = new SocialMedias();
+
+        socialMedias.setName(socialMediaDTO.getName());
+        socialMedias.setIcon(socialMediaDTO.getIcon());
+        socialMedias.setUrl(socialMediaDTO.getUrl());
+        socialMedias.setActive(true);
+
+        repository.save(socialMedias);
+    }
+
+    @Transactional
+    public void updateSocialMedia(UUID id, SocialMediaDTO socialMediaDTO) {
+
+        SocialMedias socialMedia = repository.getById(id);
+
+        if (socialMediaDTO.getName() != null) {
+            socialMedia.setName(socialMediaDTO.getName());
+        }
+        if (socialMediaDTO.getIcon() != null) {
+            socialMedia.setIcon(socialMediaDTO.getIcon());
+        }
+        if (socialMediaDTO.getUrl() != null) {
+            socialMedia.setUrl(socialMediaDTO.getUrl());
+        }
+    }
+
+    @Transactional
+    public void deleteById(UUID id) {
+        repository.deleteById(id);
+    }
 }

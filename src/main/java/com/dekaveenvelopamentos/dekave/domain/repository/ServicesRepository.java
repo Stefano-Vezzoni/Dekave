@@ -3,6 +3,8 @@ package com.dekaveenvelopamentos.dekave.domain.repository;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,10 +16,10 @@ import com.dekaveenvelopamentos.dekave.domain.entity.Services;
 @Repository
 public interface ServicesRepository extends JpaRepository<Services, UUID> {
 
-    List<Services> findAllByOrderByServiceOrder();
-
     @Query("from Services s where s.serviceType.id = :id order by serviceOrder")
-    List<Services> findAllByServiceTypeId(@Param("id") UUID serviceTypeId);
+    List<Services> findAllByServiceTypeIdOrdered(@Param("id") UUID serviceTypeId);
+
+    Page<Services> findAllByServiceTypeId(UUID serviceTypeId, Pageable pageable);
 
     Long countByServiceType(ServiceTypes serviceType);
 }

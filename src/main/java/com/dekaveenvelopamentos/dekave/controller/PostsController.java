@@ -9,8 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -23,7 +24,7 @@ import com.dekaveenvelopamentos.dekave.dto.PostDTO;
 import com.dekaveenvelopamentos.dekave.service.PostService;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api/v1")
 public class PostsController {
 
     @Autowired
@@ -35,10 +36,10 @@ public class PostsController {
         return service.getById(id);
     }
 
-    @GetMapping("/posts/all")
+    @GetMapping("/posts/{page}/{size}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Posts> getServices(@RequestHeader UUID id) {
-        return service.findAllByServiceId(id);
+    public List<Posts> getServices(@RequestHeader UUID id, @PathVariable Integer page, @PathVariable Integer size) {
+        return service.getPostsByServiceId(id, page, size);
     }
 
     @PostMapping(value = "/posts/save", consumes = { "multipart/form-data" })
@@ -49,7 +50,7 @@ public class PostsController {
 
     }
 
-    @PatchMapping(value = "/posts/update", consumes = { "multipart/form-data" })
+    @PutMapping(value = "/posts/update", consumes = { "multipart/form-data" })
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updatePost(@RequestHeader UUID id, @RequestPart("post") PostDTO postDTO,
             @RequestPart("file") MultipartFile file) {
@@ -62,5 +63,4 @@ public class PostsController {
     public void deleteById(@RequestHeader UUID id) {
         service.deleteById(id);
     }
-
 }
