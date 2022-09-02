@@ -27,9 +27,6 @@ public class PartnerService {
     private PartnersRepository repository;
 
     @Autowired
-    private FileService fileService;
-
-    @Autowired
     private GenericService genericService;
 
     public Partners getById(UUID id) {
@@ -64,7 +61,7 @@ public class PartnerService {
         partner.setName(partnersDTO.getName());
         partner.setActive(true);
         partner.setPartnerOrder(repository.count() + 1);
-        partner.setLogo(fileService.uploadImage(path, file));
+        partner.setLogo(genericService.uploadImage(path, file));
 
         repository.save(partner);
     }
@@ -78,15 +75,15 @@ public class PartnerService {
             partner.setName(partnersDTO.getName());
         }
         if (file != null) {
-            fileService.deleteFile(partner.getLogo());
-            partner.setLogo(fileService.uploadImage(path, file));
+            genericService.deleteFile(partner.getLogo());
+            partner.setLogo(genericService.uploadImage(path, file));
         }
     }
 
     @Transactional
     public void deleteById(UUID id) {
 
-        fileService.deleteFile(repository.findById(id).get().getLogo());
+        genericService.deleteFile(repository.findById(id).get().getLogo());
         repository.deleteById(id);
 
         Long index = 1L;

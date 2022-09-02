@@ -30,9 +30,6 @@ public class PostService {
     private ServicesRepository servicesRepository;
 
     @Autowired
-    private FileService fileService;
-
-    @Autowired
     private GenericService genericService;
 
     public Posts getById(UUID id) {
@@ -55,7 +52,7 @@ public class PostService {
 
         post.setTitle(postDTO.getTitle());
         post.setDescription(postDTO.getDescription());
-        post.setPhoto(fileService.uploadImage(path, file));
+        post.setPhoto(genericService.uploadImage(path, file));
         post.setPostsOrder(repository.countByService(servicesRepository.findById(serviceId).get()) + 1);
         post.setService(servicesRepository.findById(serviceId).get());
 
@@ -74,9 +71,9 @@ public class PostService {
             post.setDescription(postDTO.getDescription());
         }
         if (file != null) {
-            fileService.deleteFile(post.getPhoto());
+            genericService.deleteFile(post.getPhoto());
 
-            post.setPhoto(fileService.uploadImage(path, file));
+            post.setPhoto(genericService.uploadImage(path, file));
         }
     }
 
@@ -86,7 +83,7 @@ public class PostService {
         // Get service ID to re-order after delete.
         UUID serviceId = repository.findById(id).get().getService().getId();
 
-        fileService.deleteFile(repository.findById(id).get().getPhoto());
+        genericService.deleteFile(repository.findById(id).get().getPhoto());
         repository.deleteById(id);
 
         Long index = 1L;

@@ -27,9 +27,6 @@ public class FeedbackService {
     private FeedbacksRepository repository;
 
     @Autowired
-    private FileService fileService;
-
-    @Autowired
     private GenericService genericService;
 
     public Feedbacks getById(UUID id) {
@@ -66,7 +63,7 @@ public class FeedbackService {
         feedback.setComment(feedbacksDTO.getComment());
         feedback.setActive(true);
         feedback.setFeedbackOrder(repository.count() + 1);
-        feedback.setAvatar(fileService.uploadImage(path, file));
+        feedback.setAvatar(genericService.uploadImage(path, file));
 
         repository.save(feedback);
     }
@@ -86,15 +83,15 @@ public class FeedbackService {
             feedback.setComment(feedbacksDTO.getComment());
         }
         if (file != null) {
-            fileService.deleteFile(feedback.getAvatar());
-            feedback.setAvatar(fileService.uploadImage(path, file));
+            genericService.deleteFile(feedback.getAvatar());
+            feedback.setAvatar(genericService.uploadImage(path, file));
         }
     }
 
     @Transactional
     public void deleteById(UUID id) {
 
-        fileService.deleteFile(repository.findById(id).get().getAvatar());
+        genericService.deleteFile(repository.findById(id).get().getAvatar());
         repository.deleteById(id);
 
         Long index = 1L;

@@ -27,9 +27,6 @@ public class ServiceTypeService {
     private ServiceTypesRepository repository;
 
     @Autowired
-    private FileService fileService;
-
-    @Autowired
     private GenericService genericService;
 
     public ServiceTypes getById(UUID id) {
@@ -64,7 +61,7 @@ public class ServiceTypeService {
         serviceTypes.setTitle(serviceTypesDTO.getTitle());
         serviceTypes.setActive(true);
         serviceTypes.setServiceTypeOrder(repository.count() + 1);
-        serviceTypes.setPhoto(fileService.uploadImage(path, file));
+        serviceTypes.setPhoto(genericService.uploadImage(path, file));
 
         repository.save(serviceTypes);
 
@@ -79,15 +76,15 @@ public class ServiceTypeService {
             serviceType.setTitle(serviceTypesDTO.getTitle());
         }
         if (file != null) {
-            fileService.deleteFile(serviceType.getPhoto());
-            serviceType.setPhoto(fileService.uploadImage(path, file));
+            genericService.deleteFile(serviceType.getPhoto());
+            serviceType.setPhoto(genericService.uploadImage(path, file));
         }
     }
 
     @Transactional
     public void deleteById(UUID id) {
 
-        fileService.deleteFile(repository.findById(id).get().getPhoto());
+        genericService.deleteFile(repository.findById(id).get().getPhoto());
         repository.deleteById(id);
 
         Long index = 1L;
