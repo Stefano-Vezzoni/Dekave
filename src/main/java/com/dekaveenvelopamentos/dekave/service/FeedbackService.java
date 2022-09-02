@@ -1,5 +1,6 @@
 package com.dekaveenvelopamentos.dekave.service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -54,7 +55,7 @@ public class FeedbackService {
     }
 
     @Transactional
-    public void saveFeedback(FeedbacksDTO feedbacksDTO, MultipartFile file) {
+    public void saveFeedback(FeedbacksDTO feedbacksDTO, MultipartFile file) throws IOException {
 
         Feedbacks feedback = new Feedbacks();
 
@@ -69,7 +70,7 @@ public class FeedbackService {
     }
 
     @Transactional
-    public void updateFeedback(UUID id, FeedbacksDTO feedbacksDTO, MultipartFile file) {
+    public void updateFeedback(UUID id, FeedbacksDTO feedbacksDTO, MultipartFile file) throws IOException {
 
         Feedbacks feedback = repository.getById(id);
 

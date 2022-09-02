@@ -1,5 +1,6 @@
 package com.dekaveenvelopamentos.dekave.service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -54,7 +55,7 @@ public class PartnerService {
     }
 
     @Transactional
-    public void savePartner(PartnersDTO partnersDTO, MultipartFile file) {
+    public void savePartner(PartnersDTO partnersDTO, MultipartFile file) throws IOException {
 
         Partners partner = new Partners();
 
@@ -67,7 +68,7 @@ public class PartnerService {
     }
 
     @Transactional
-    public void updatePartner(UUID id, PartnersDTO partnersDTO, MultipartFile file) {
+    public void updatePartner(UUID id, PartnersDTO partnersDTO, MultipartFile file) throws IOException {
 
         Partners partner = repository.getById(id);
 

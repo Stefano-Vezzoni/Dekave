@@ -1,5 +1,6 @@
 package com.dekaveenvelopamentos.dekave.service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -60,7 +61,7 @@ public class ServiceService {
     }
 
     @Transactional
-    public void saveService(UUID serviceTypeId, ServicesDTO servicesDTO, MultipartFile file) {
+    public void saveService(UUID serviceTypeId, ServicesDTO servicesDTO, MultipartFile file) throws IOException {
 
         Services service = new Services();
 
@@ -77,7 +78,7 @@ public class ServiceService {
     }
 
     @Transactional
-    public void updateService(UUID id, ServicesDTO servicesDTO, MultipartFile file) {
+    public void updateService(UUID id, ServicesDTO servicesDTO, MultipartFile file) throws IOException {
 
         Services service = repository.getById(id);
 

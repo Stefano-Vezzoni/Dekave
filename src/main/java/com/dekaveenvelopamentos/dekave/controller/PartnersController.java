@@ -1,5 +1,6 @@
 package com.dekaveenvelopamentos.dekave.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -47,14 +48,14 @@ public class PartnersController {
     @PostMapping(value = "/partners/save", consumes = { "multipart/form-data" })
     @ResponseStatus(HttpStatus.CREATED)
     public void createPartners(@RequestPart("partner") @Valid PartnersDTO partnersDTO,
-            @RequestPart("file") MultipartFile file) {
+            @RequestPart("file") MultipartFile file) throws IOException {
         service.savePartner(partnersDTO, file);
     }
 
     @PutMapping(value = "/partners/update", consumes = { "multipart/form-data" })
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updatePartners(@RequestHeader UUID id, @RequestPart("partner") PartnersDTO partnersDTO,
-            @RequestPart("file") MultipartFile file) {
+            @RequestPart("file") MultipartFile file) throws IOException {
         service.updatePartner(id, partnersDTO, file);
     }
 

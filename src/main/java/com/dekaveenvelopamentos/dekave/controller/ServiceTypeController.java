@@ -1,5 +1,6 @@
 package com.dekaveenvelopamentos.dekave.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -47,14 +48,14 @@ public class ServiceTypeController {
     @PostMapping(value = "/servicetypes/save", consumes = { "multipart/form-data" })
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void createServiceType(@RequestPart("serviceType") @Valid ServiceTypesDTO serviceTypesDTO,
-            @RequestPart("file") MultipartFile file) {
+            @RequestPart("file") MultipartFile file) throws IOException {
         service.saveServiceType(serviceTypesDTO, file);
     }
 
     @PutMapping("/servicetypes/update")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateServiceTypes(@RequestHeader UUID id, @RequestPart("serviceType") ServiceTypesDTO serviceTypesDTO,
-            @RequestPart("file") MultipartFile file) {
+            @RequestPart("file") MultipartFile file) throws IOException {
         service.updateServiceType(id, serviceTypesDTO, file);
     }
 
