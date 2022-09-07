@@ -26,12 +26,10 @@ public class ApiExceptionHandler {
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	public ErrorMessage IdNotFoundException() {
 
-		ErrorMessageEnum message = ErrorMessageEnum.ID_NOT_FOUND;
-
 		ErrorMessage errorMessage = new ErrorMessage(
 				HttpStatus.NOT_FOUND.value(),
 				new Date(),
-				message.getMessage());
+				ErrorMessageEnum.ID_NOT_FOUND.getMessage());
 		return errorMessage;
 	}
 
@@ -41,12 +39,10 @@ public class ApiExceptionHandler {
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public ErrorMessage NotBlankException() {
 
-		ErrorMessageEnum message = ErrorMessageEnum.BAD_REQUEST;
-
 		ErrorMessage errorMessage = new ErrorMessage(
 				HttpStatus.BAD_REQUEST.value(),
 				new Date(),
-				message.getMessage());
+				ErrorMessageEnum.BAD_REQUEST.getMessage());
 		return errorMessage;
 	}
 
@@ -54,12 +50,10 @@ public class ApiExceptionHandler {
 	@ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
 	public ErrorMessage MethodNotAllowedException() {
 
-		ErrorMessageEnum message = ErrorMessageEnum.METHOD_NOT_ALLOWED;
-
 		ErrorMessage errorMessage = new ErrorMessage(
 				HttpStatus.METHOD_NOT_ALLOWED.value(),
 				new Date(),
-				message.getMessage());
+				ErrorMessageEnum.METHOD_NOT_ALLOWED.getMessage());
 		return errorMessage;
 	}
 
@@ -67,12 +61,10 @@ public class ApiExceptionHandler {
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public ErrorMessage IOException() {
 
-		ErrorMessageEnum message = ErrorMessageEnum.FILE_NOT_FOUND;
-
 		ErrorMessage errorMessage = new ErrorMessage(
 				HttpStatus.BAD_REQUEST.value(),
 				new Date(),
-				message.getMessage());
+				ErrorMessageEnum.FILE_NOT_FOUND.getMessage());
 		return errorMessage;
 	}
 
