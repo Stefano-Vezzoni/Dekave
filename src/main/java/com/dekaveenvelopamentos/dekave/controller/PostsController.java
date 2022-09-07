@@ -24,25 +24,33 @@ import com.dekaveenvelopamentos.dekave.domain.entity.Posts;
 import com.dekaveenvelopamentos.dekave.dto.PostDTO;
 import com.dekaveenvelopamentos.dekave.service.PostService;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/api/v1")
 public class PostsController {
 
+    private static final String postsTag = "Posts";
+
     @Autowired
     private PostService service;
 
+    @Operation(summary = "Get by id.", tags = postsTag)
     @GetMapping("/posts")
     @ResponseStatus(HttpStatus.OK)
-    public Posts getById(@RequestHeader UUID id) {
+    public Posts getPostById(@RequestHeader UUID id) {
         return service.getById(id);
     }
 
+    @Operation(summary = "Get all per page and size.", tags = postsTag)
     @GetMapping("/posts/{page}/{size}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Posts> getServices(@RequestHeader UUID id, @PathVariable Integer page, @PathVariable Integer size) {
+    public List<Posts> getAllPostsByServiceId(@RequestHeader UUID id, @PathVariable Integer page,
+            @PathVariable Integer size) {
         return service.getPostsByServiceId(id, page, size);
     }
 
+    @Operation(summary = "Save new post.", tags = postsTag)
     @PostMapping(value = "/posts/save", consumes = { "multipart/form-data" })
     @ResponseStatus(HttpStatus.CREATED)
     public void savePost(@RequestHeader UUID id, @RequestPart("post") @Valid PostDTO postDTO,
@@ -51,6 +59,7 @@ public class PostsController {
 
     }
 
+    @Operation(summary = "Update by id.", tags = postsTag)
     @PutMapping(value = "/posts/update", consumes = { "multipart/form-data" })
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updatePost(@RequestHeader UUID id, @RequestPart("post") PostDTO postDTO,
@@ -59,9 +68,10 @@ public class PostsController {
 
     }
 
+    @Operation(summary = "Delete by id.", tags = postsTag)
     @DeleteMapping("/posts/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteById(@RequestHeader UUID id) {
+    public void deletePostById(@RequestHeader UUID id) {
         service.deleteById(id);
     }
 }

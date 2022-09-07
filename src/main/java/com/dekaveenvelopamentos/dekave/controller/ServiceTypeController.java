@@ -26,45 +26,55 @@ import com.dekaveenvelopamentos.dekave.dto.ActiveDTO;
 import com.dekaveenvelopamentos.dekave.dto.ServiceTypesDTO;
 import com.dekaveenvelopamentos.dekave.service.ServiceTypeService;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/api/v1")
 public class ServiceTypeController {
 
+    private static final String serviceTypesTag = "Service Types";
+
     @Autowired
     private ServiceTypeService service;
 
+    @Operation(summary = "Get by id.", tags = serviceTypesTag)
     @GetMapping("/servicetypes")
     @ResponseStatus(HttpStatus.OK)
     public ServiceTypes getServiceTypesById(@RequestHeader UUID id) {
         return service.getById(id);
     }
 
+    @Operation(summary = "Get all per page and size.", tags = serviceTypesTag)
     @GetMapping("/servicetypes/{page}/{size}")
     @ResponseStatus(HttpStatus.OK)
-    public List<ServiceTypes> getServiceTypes(@PathVariable Integer page, @PathVariable Integer size) {
+    public List<ServiceTypes> getAllServiceTypes(@PathVariable Integer page, @PathVariable Integer size) {
         return service.getServiceTypes(page, size);
     }
 
+    @Operation(summary = "Save new service type.", tags = serviceTypesTag)
     @PostMapping(value = "/servicetypes/save", consumes = { "multipart/form-data" })
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void createServiceType(@RequestPart("serviceType") @Valid ServiceTypesDTO serviceTypesDTO,
+    public void saveServiceType(@RequestPart("serviceType") @Valid ServiceTypesDTO serviceTypesDTO,
             @RequestPart("file") MultipartFile file) throws IOException {
         service.saveServiceType(serviceTypesDTO, file);
     }
 
+    @Operation(summary = "Update by id.", tags = serviceTypesTag)
     @PutMapping("/servicetypes/update")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateServiceTypes(@RequestHeader UUID id, @RequestPart("serviceType") ServiceTypesDTO serviceTypesDTO,
+    public void updateServiceType(@RequestHeader UUID id, @RequestPart("serviceType") ServiceTypesDTO serviceTypesDTO,
             @RequestPart("file") MultipartFile file) throws IOException {
         service.updateServiceType(id, serviceTypesDTO, file);
     }
 
+    @Operation(summary = "Activate/Disable by id.", tags = serviceTypesTag)
     @PutMapping("/servicetypes/active")
     @ResponseStatus(HttpStatus.OK)
-    public void activateById(@RequestHeader UUID id, @RequestBody @Valid ActiveDTO activeDTO) {
+    public void activeById(@RequestHeader UUID id, @RequestBody @Valid ActiveDTO activeDTO) {
         service.activeById(id, activeDTO);
     }
 
+    @Operation(summary = "Delete by id.", tags = serviceTypesTag)
     @DeleteMapping("/servicetypes/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteServiceTypeById(@RequestHeader UUID id) {

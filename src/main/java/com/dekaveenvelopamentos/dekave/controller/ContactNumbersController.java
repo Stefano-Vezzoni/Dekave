@@ -22,37 +22,46 @@ import com.dekaveenvelopamentos.dekave.domain.entity.ContactNumbers;
 import com.dekaveenvelopamentos.dekave.dto.ContactNumberDTO;
 import com.dekaveenvelopamentos.dekave.service.ContactNumberService;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/api/v1")
 public class ContactNumbersController {
 
+    private static final String contactNumbersTag = "Contact Numbers";
+
     @Autowired
     private ContactNumberService service;
 
+    @Operation(summary = "Get by id.", tags = contactNumbersTag)
     @GetMapping("/contactnumbers")
     @ResponseStatus(HttpStatus.OK)
     public ContactNumbers getContactNumberById(@RequestHeader UUID id) {
         return service.getById(id);
     }
 
+    @Operation(summary = "Get all per page and size.", tags = contactNumbersTag)
     @GetMapping("/contactnumbers/{page}/{size}")
     @ResponseStatus(HttpStatus.OK)
     public List<ContactNumbers> getAllContactNumbers(@PathVariable Integer page, @PathVariable Integer size) {
         return service.getContactNumbers(page, size);
     }
 
+    @Operation(summary = "Save new contact number.", tags = contactNumbersTag)
     @PostMapping("/contactnumbers/save")
     @ResponseStatus(HttpStatus.CREATED)
     public void saveContactNumber(@RequestBody @Valid ContactNumberDTO contactNumberDTO) {
         service.saveContactNumber(contactNumberDTO);
     }
 
+    @Operation(summary = "Update by id.", tags = contactNumbersTag)
     @PutMapping("/contactnumbers/update")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateContactNumber(@RequestHeader UUID id, @RequestBody ContactNumberDTO contactNumberDTO) {
         service.updateContactNumber(id, contactNumberDTO);
     }
 
+    @Operation(summary = "Delete by id.", tags = contactNumbersTag)
     @DeleteMapping("/contactnumbers/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteContactNumberById(@RequestHeader UUID id) {

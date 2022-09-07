@@ -26,25 +26,32 @@ import com.dekaveenvelopamentos.dekave.dto.ActiveDTO;
 import com.dekaveenvelopamentos.dekave.dto.FeedbacksDTO;
 import com.dekaveenvelopamentos.dekave.service.FeedbackService;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/api/v1")
 public class FeedbacksController {
 
+    private static final String feedbacksTag = "Feedbacks";
+
     @Autowired
     private FeedbackService service;
 
+    @Operation(summary = "Get by id.", tags = feedbacksTag)
     @GetMapping("/feedbacks")
     @ResponseStatus(HttpStatus.OK)
     public Feedbacks getFeedbackById(@RequestHeader UUID id) {
         return service.getById(id);
     }
 
+    @Operation(summary = "Get all per page and size.", tags = feedbacksTag)
     @GetMapping("/feedbacks/{page}/{size}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Feedbacks> getFeedbacks(@PathVariable Integer page, @PathVariable Integer size) {
+    public List<Feedbacks> getAllFeedbacks(@PathVariable Integer page, @PathVariable Integer size) {
         return service.getFeedbacks(page, size);
     }
 
+    @Operation(summary = "Save new feedback.", tags = feedbacksTag)
     @PostMapping(value = "/feedbacks/save", consumes = { "multipart/form-data" })
     @ResponseStatus(HttpStatus.CREATED)
     public void saveFeedback(@RequestPart("feedback") @Valid FeedbacksDTO feedbacksDTO,
@@ -52,6 +59,7 @@ public class FeedbacksController {
         service.saveFeedback(feedbacksDTO, file);
     }
 
+    @Operation(summary = "Update by id.", tags = feedbacksTag)
     @PutMapping(value = "/feedbacks/update", consumes = { "multipart/form-data" })
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateFeedback(@RequestHeader UUID id, @RequestPart("feedback") FeedbacksDTO feedbacksDTO,
@@ -59,12 +67,14 @@ public class FeedbacksController {
         service.updateFeedback(id, feedbacksDTO, file);
     }
 
+    @Operation(summary = "Activate/Disable by id.", tags = feedbacksTag)
     @PutMapping("/feedbacks/active")
     @ResponseStatus(HttpStatus.OK)
     public void activeById(@RequestHeader UUID id, @RequestBody @Valid ActiveDTO activeDTO) {
         service.activeById(id, activeDTO);
     }
 
+    @Operation(summary = "Delete by id.", tags = feedbacksTag)
     @DeleteMapping("/feedbacks/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteFeedbackById(@RequestHeader UUID id) {

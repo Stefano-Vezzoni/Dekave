@@ -23,43 +23,53 @@ import com.dekaveenvelopamentos.dekave.dto.ActiveDTO;
 import com.dekaveenvelopamentos.dekave.dto.SocialMediaDTO;
 import com.dekaveenvelopamentos.dekave.service.SocialMediaService;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/api/v1")
 public class SocialMediasController {
 
+    private static final String socialMediaTag = "Social Medias";
+
     @Autowired
     private SocialMediaService service;
 
+    @Operation(summary = "Get by id.", tags = socialMediaTag)
     @GetMapping("/socialmedias")
     @ResponseStatus(HttpStatus.OK)
     public SocialMedias getSocialMediaById(@RequestHeader UUID id) {
         return service.getById(id);
     }
 
+    @Operation(summary = "Get all per page and size.", tags = socialMediaTag)
     @GetMapping("/socialmedias/{page}/{size}")
     @ResponseStatus(HttpStatus.OK)
     public List<SocialMedias> getAllSocialMedias(@PathVariable Integer page, @PathVariable Integer size) {
         return service.getSocialMedias(page, size);
     }
 
+    @Operation(summary = "Save new social media.", tags = socialMediaTag)
     @PostMapping("/socialmedias/save")
     @ResponseStatus(HttpStatus.CREATED)
     public void saveSocialMedia(@RequestBody @Valid SocialMediaDTO socialMediaDTO) {
         service.saveSocialMedia(socialMediaDTO);
     }
 
+    @Operation(summary = "Update by id.", tags = socialMediaTag)
     @PutMapping("/socialmedias/update")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateSocialMedia(@RequestHeader UUID id, @RequestBody SocialMediaDTO socialMediaDTO) {
         service.updateSocialMedia(id, socialMediaDTO);
     }
 
+    @Operation(summary = "Activate/Disable by id.", tags = socialMediaTag)
     @PutMapping("/socialmedias/active")
     @ResponseStatus(HttpStatus.OK)
-    public void activateById(@RequestHeader UUID id, @RequestBody @Valid ActiveDTO activeDTO) {
+    public void activeById(@RequestHeader UUID id, @RequestBody @Valid ActiveDTO activeDTO) {
         service.activeById(id, activeDTO);
     }
 
+    @Operation(summary = "Delete by id.", tags = socialMediaTag)
     @DeleteMapping("/socialmedias/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteSocialMediaById(@RequestHeader UUID id) {

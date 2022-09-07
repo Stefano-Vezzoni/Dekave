@@ -26,32 +26,41 @@ import com.dekaveenvelopamentos.dekave.dto.ActiveDTO;
 import com.dekaveenvelopamentos.dekave.dto.ServicesDTO;
 import com.dekaveenvelopamentos.dekave.service.ServiceService;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/api/v1")
 public class ServiceController {
 
+    private static final String servicesTag = "Services";
+
     @Autowired
     private ServiceService service;
 
+    @Operation(summary = "Get by id.", tags = servicesTag)
     @GetMapping("/services")
     @ResponseStatus(HttpStatus.OK)
     public Services getServiceById(@RequestHeader UUID id) {
         return service.getById(id);
     }
 
+    @Operation(summary = "Get all per page and size.", tags = servicesTag)
     @GetMapping("/services/{page}/{size}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Services> getServices(@RequestHeader UUID id, @PathVariable Integer page, @PathVariable Integer size) {
+    public List<Services> getAllServicesByServiceTypeId(@RequestHeader UUID id, @PathVariable Integer page,
+            @PathVariable Integer size) {
         return service.getServicesByServiceTypeId(id, page, size);
     }
 
+    @Operation(summary = "Save new service.", tags = servicesTag)
     @PostMapping(value = "/services/save", consumes = { "multipart/form-data" })
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void createService(@RequestHeader UUID id, @RequestPart("services") @Valid ServicesDTO servicesDTO,
+    public void saveService(@RequestHeader UUID id, @RequestPart("services") @Valid ServicesDTO servicesDTO,
             @RequestPart("file") MultipartFile file) throws IOException {
         service.saveService(id, servicesDTO, file);
     }
 
+    @Operation(summary = "Update by id.", tags = servicesTag)
     @PutMapping("/services/update")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateService(@RequestHeader UUID id, @RequestPart("service") ServicesDTO servicesDTO,
@@ -59,12 +68,14 @@ public class ServiceController {
         service.updateService(id, servicesDTO, file);
     }
 
+    @Operation(summary = "Activate/Disable by id.", tags = servicesTag)
     @PutMapping("/services/active")
     @ResponseStatus(HttpStatus.OK)
-    public void activateById(@RequestHeader UUID id, @RequestBody @Valid ActiveDTO activeDTO) {
+    public void activeById(@RequestHeader UUID id, @RequestBody @Valid ActiveDTO activeDTO) {
         service.activeById(id, activeDTO);
     }
 
+    @Operation(summary = "Delete by id.", tags = servicesTag)
     @DeleteMapping("/services/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteServiceById(@RequestHeader UUID id) {

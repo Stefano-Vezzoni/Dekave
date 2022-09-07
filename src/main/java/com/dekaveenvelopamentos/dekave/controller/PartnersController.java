@@ -26,48 +26,58 @@ import com.dekaveenvelopamentos.dekave.dto.ActiveDTO;
 import com.dekaveenvelopamentos.dekave.dto.PartnersDTO;
 import com.dekaveenvelopamentos.dekave.service.PartnerService;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/api/v1")
 public class PartnersController {
 
+    private static final String partnersTag = "Partners";
+
     @Autowired
     private PartnerService service;
 
+    @Operation(summary = "Get by id.", tags = partnersTag)
     @GetMapping("/partners")
     @ResponseStatus(HttpStatus.OK)
-    public Partners getPartnersById(@RequestHeader UUID id) {
+    public Partners getPartnerById(@RequestHeader UUID id) {
         return service.getById(id);
     }
 
+    @Operation(summary = "Get all per page and size.", tags = partnersTag)
     @GetMapping("/partners/{page}/{size}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Partners> getPartners(@PathVariable Integer page, @PathVariable Integer size) {
+    public List<Partners> getAllPartners(@PathVariable Integer page, @PathVariable Integer size) {
         return service.getPartners(page, size);
     }
 
+    @Operation(summary = "Save new partner.", tags = partnersTag)
     @PostMapping(value = "/partners/save", consumes = { "multipart/form-data" })
     @ResponseStatus(HttpStatus.CREATED)
-    public void createPartners(@RequestPart("partner") @Valid PartnersDTO partnersDTO,
+    public void savePartner(@RequestPart("partner") @Valid PartnersDTO partnersDTO,
             @RequestPart("file") MultipartFile file) throws IOException {
         service.savePartner(partnersDTO, file);
     }
 
+    @Operation(summary = "Update by id.", tags = partnersTag)
     @PutMapping(value = "/partners/update", consumes = { "multipart/form-data" })
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updatePartners(@RequestHeader UUID id, @RequestPart("partner") PartnersDTO partnersDTO,
+    public void updatePartner(@RequestHeader UUID id, @RequestPart("partner") PartnersDTO partnersDTO,
             @RequestPart("file") MultipartFile file) throws IOException {
         service.updatePartner(id, partnersDTO, file);
     }
 
+    @Operation(summary = "Activate/Disable by id.", tags = partnersTag)
     @PutMapping("/partners/active")
     @ResponseStatus(HttpStatus.OK)
-    public void activateById(@RequestHeader UUID id, @RequestBody @Valid ActiveDTO activeDTO) {
+    public void activeById(@RequestHeader UUID id, @RequestBody @Valid ActiveDTO activeDTO) {
         service.activeById(id, activeDTO);
     }
 
+    @Operation(summary = "Delete by id.", tags = partnersTag)
     @DeleteMapping("/partners/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletePartnersById(@RequestHeader UUID id) {
+    public void deletePartnerById(@RequestHeader UUID id) {
         service.deleteById(id);
     }
 }
