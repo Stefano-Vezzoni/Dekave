@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -38,9 +38,8 @@ public class Posts {
     @Column(nullable = false)
     private Long postsOrder;
 
-    @OneToOne
-    @Column(nullable = false)
-    @JoinColumn(name = "service_id", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "service_id", referencedColumnName = "id", nullable = false)
     @JsonIgnore
     private Services service;
 

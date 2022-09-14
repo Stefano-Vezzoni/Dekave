@@ -35,5 +35,4 @@ public class ServiceTypes {
 
     @Column(nullable = false)
     private Long serviceTypeOrder;
-
 }

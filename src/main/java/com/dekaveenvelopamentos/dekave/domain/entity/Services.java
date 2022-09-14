@@ -44,8 +44,7 @@ public class Services {
     private Long serviceOrder;
 
     @ManyToOne
-    @Column(nullable = false)
-    @JoinColumn(name = "service_type_id", referencedColumnName = "id")
+    @JoinColumn(name = "service_type_id", referencedColumnName = "id", nullable = false)
     @JsonIgnore
     private ServiceTypes serviceType;
 
