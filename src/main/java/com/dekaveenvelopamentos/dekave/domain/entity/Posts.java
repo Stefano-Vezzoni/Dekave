@@ -39,6 +39,7 @@ public class Posts {
     private Long postsOrder;
 
     @OneToOne
+    @Column(nullable = false)
     @JoinColumn(name = "service_id", referencedColumnName = "id")
     @JsonIgnore
     private Services service;
