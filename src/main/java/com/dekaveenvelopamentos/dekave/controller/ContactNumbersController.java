@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,9 +33,9 @@ public class ContactNumbersController {
     private ContactNumberService service;
 
     @Operation(summary = "Get by id.", tags = contactNumbersTag)
-    @GetMapping("/contactnumbers")
+    @GetMapping("/contactnumbers/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ContactNumbers getContactNumberById(@RequestHeader UUID id) {
+    public ContactNumbers getContactNumberById(@PathVariable UUID id) {
         return service.getById(id);
     }
 
@@ -55,16 +54,16 @@ public class ContactNumbersController {
     }
 
     @Operation(summary = "Update by id.", tags = contactNumbersTag)
-    @PutMapping("/contactnumbers/update")
+    @PutMapping("/contactnumbers/update/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateContactNumber(@RequestHeader UUID id, @RequestBody ContactNumberDTO contactNumberDTO) {
+    public void updateContactNumber(@PathVariable UUID id, @RequestBody ContactNumberDTO contactNumberDTO) {
         service.updateContactNumber(id, contactNumberDTO);
     }
 
     @Operation(summary = "Delete by id.", tags = contactNumbersTag)
-    @DeleteMapping("/contactnumbers/delete")
+    @DeleteMapping("/contactnumbers/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteContactNumberById(@RequestHeader UUID id) {
+    public void deleteContactNumberById(@PathVariable UUID id) {
         service.deleteById(id);
     }
 }

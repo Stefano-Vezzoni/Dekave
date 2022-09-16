@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -38,9 +37,9 @@ public class FeedbacksController {
     private FeedbackService service;
 
     @Operation(summary = "Get by id.", tags = feedbacksTag)
-    @GetMapping("/feedbacks")
+    @GetMapping("/feedbacks/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Feedbacks getFeedbackById(@RequestHeader UUID id) {
+    public Feedbacks getFeedbackById(@PathVariable UUID id) {
         return service.getById(id);
     }
 
@@ -60,24 +59,24 @@ public class FeedbacksController {
     }
 
     @Operation(summary = "Update by id.", tags = feedbacksTag)
-    @PutMapping(value = "/feedbacks/update", consumes = { "multipart/form-data" })
+    @PutMapping(value = "/feedbacks/update/{id}", consumes = { "multipart/form-data" })
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateFeedback(@RequestHeader UUID id, @RequestPart("feedback") FeedbacksDTO feedbacksDTO,
+    public void updateFeedback(@PathVariable UUID id, @RequestPart("feedback") FeedbacksDTO feedbacksDTO,
             @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
         service.updateFeedback(id, feedbacksDTO, file);
     }
 
     @Operation(summary = "Activate/Disable by id.", tags = feedbacksTag)
-    @PutMapping("/feedbacks/active")
+    @PutMapping("/feedbacks/active/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void activeById(@RequestHeader UUID id, @RequestBody @Valid ActiveDTO activeDTO) {
+    public void activeById(@PathVariable UUID id, @RequestBody @Valid ActiveDTO activeDTO) {
         service.activeById(id, activeDTO);
     }
 
     @Operation(summary = "Delete by id.", tags = feedbacksTag)
-    @DeleteMapping("/feedbacks/delete")
+    @DeleteMapping("/feedbacks/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteFeedbackById(@RequestHeader UUID id) {
+    public void deleteFeedbackById(@PathVariable UUID id) {
         service.deleteById(id);
     }
 }

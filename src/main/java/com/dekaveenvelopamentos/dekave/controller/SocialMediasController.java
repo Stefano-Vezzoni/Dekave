@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,9 +34,9 @@ public class SocialMediasController {
     private SocialMediaService service;
 
     @Operation(summary = "Get by id.", tags = socialMediaTag)
-    @GetMapping("/socialmedias")
+    @GetMapping("/socialmedias/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public SocialMedias getSocialMediaById(@RequestHeader UUID id) {
+    public SocialMedias getSocialMediaById(@PathVariable UUID id) {
         return service.getById(id);
     }
 
@@ -56,23 +55,23 @@ public class SocialMediasController {
     }
 
     @Operation(summary = "Update by id.", tags = socialMediaTag)
-    @PutMapping("/socialmedias/update")
+    @PutMapping("/socialmedias/update/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateSocialMedia(@RequestHeader UUID id, @RequestBody SocialMediaDTO socialMediaDTO) {
+    public void updateSocialMedia(@PathVariable UUID id, @RequestBody SocialMediaDTO socialMediaDTO) {
         service.updateSocialMedia(id, socialMediaDTO);
     }
 
     @Operation(summary = "Activate/Disable by id.", tags = socialMediaTag)
-    @PutMapping("/socialmedias/active")
+    @PutMapping("/socialmedias/active/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void activeById(@RequestHeader UUID id, @RequestBody @Valid ActiveDTO activeDTO) {
+    public void activeById(@PathVariable UUID id, @RequestBody @Valid ActiveDTO activeDTO) {
         service.activeById(id, activeDTO);
     }
 
     @Operation(summary = "Delete by id.", tags = socialMediaTag)
-    @DeleteMapping("/socialmedias/delete")
+    @DeleteMapping("/socialmedias/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteSocialMediaById(@RequestHeader UUID id) {
+    public void deleteSocialMediaById(@PathVariable UUID id) {
         service.deleteById(id);
     }
 }

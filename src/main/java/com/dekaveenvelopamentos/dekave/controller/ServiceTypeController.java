@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -38,9 +37,9 @@ public class ServiceTypeController {
     private ServiceTypeService service;
 
     @Operation(summary = "Get by id.", tags = serviceTypesTag)
-    @GetMapping("/servicetypes")
+    @GetMapping("/servicetypes/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ServiceTypes getServiceTypesById(@RequestHeader UUID id) {
+    public ServiceTypes getServiceTypesById(@PathVariable UUID id) {
         return service.getById(id);
     }
 
@@ -60,24 +59,24 @@ public class ServiceTypeController {
     }
 
     @Operation(summary = "Update by id.", tags = serviceTypesTag)
-    @PutMapping("/servicetypes/update")
+    @PutMapping("/servicetypes/update/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateServiceType(@RequestHeader UUID id, @RequestPart("serviceType") ServiceTypesDTO serviceTypesDTO,
+    public void updateServiceType(@PathVariable UUID id, @RequestPart("serviceType") ServiceTypesDTO serviceTypesDTO,
             @RequestPart("file") MultipartFile file) throws IOException {
         service.updateServiceType(id, serviceTypesDTO, file);
     }
 
     @Operation(summary = "Activate/Disable by id.", tags = serviceTypesTag)
-    @PutMapping("/servicetypes/active")
+    @PutMapping("/servicetypes/active/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void activeById(@RequestHeader UUID id, @RequestBody @Valid ActiveDTO activeDTO) {
+    public void activeById(@PathVariable UUID id, @RequestBody @Valid ActiveDTO activeDTO) {
         service.activeById(id, activeDTO);
     }
 
     @Operation(summary = "Delete by id.", tags = serviceTypesTag)
-    @DeleteMapping("/servicetypes/delete")
+    @DeleteMapping("/servicetypes/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteServiceTypeById(@RequestHeader UUID id) {
+    public void deleteServiceTypeById(@PathVariable UUID id) {
         service.deleteById(id);
     }
 }

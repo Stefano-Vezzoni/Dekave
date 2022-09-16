@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -38,9 +37,9 @@ public class PartnersController {
     private PartnerService service;
 
     @Operation(summary = "Get by id.", tags = partnersTag)
-    @GetMapping("/partners")
+    @GetMapping("/partners/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Partners getPartnerById(@RequestHeader UUID id) {
+    public Partners getPartnerById(@PathVariable UUID id) {
         return service.getById(id);
     }
 
@@ -60,24 +59,24 @@ public class PartnersController {
     }
 
     @Operation(summary = "Update by id.", tags = partnersTag)
-    @PutMapping(value = "/partners/update", consumes = { "multipart/form-data" })
+    @PutMapping(value = "/partners/update/{id}", consumes = { "multipart/form-data" })
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updatePartner(@RequestHeader UUID id, @RequestPart("partner") PartnersDTO partnersDTO,
+    public void updatePartner(@PathVariable UUID id, @RequestPart("partner") PartnersDTO partnersDTO,
             @RequestPart("file") MultipartFile file) throws IOException {
         service.updatePartner(id, partnersDTO, file);
     }
 
     @Operation(summary = "Activate/Disable by id.", tags = partnersTag)
-    @PutMapping("/partners/active")
+    @PutMapping("/partners/active/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void activeById(@RequestHeader UUID id, @RequestBody @Valid ActiveDTO activeDTO) {
+    public void activeById(@PathVariable UUID id, @RequestBody @Valid ActiveDTO activeDTO) {
         service.activeById(id, activeDTO);
     }
 
     @Operation(summary = "Delete by id.", tags = partnersTag)
-    @DeleteMapping("/partners/delete")
+    @DeleteMapping("/partners/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletePartnerById(@RequestHeader UUID id) {
+    public void deletePartnerById(@PathVariable UUID id) {
         service.deleteById(id);
     }
 }
