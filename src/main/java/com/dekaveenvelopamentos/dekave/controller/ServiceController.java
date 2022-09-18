@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,10 +45,11 @@ public class ServiceController {
     }
 
     @Operation(summary = "Get all per page and size.", tags = servicesTag)
-    @GetMapping("/services/{id}/{page}/{size}")
+    @GetMapping("/services")
     @ResponseStatus(HttpStatus.OK)
-    public List<Services> getAllServicesByServiceTypeId(@PathVariable UUID id, @PathVariable Integer page,
-            @PathVariable Integer size) {
+    public List<Services> getAllServicesByServiceTypeId(@RequestParam UUID id,
+            @RequestParam(required = false, defaultValue = "0") Integer page,
+            @RequestParam(required = false, defaultValue = "50") Integer size) {
         return service.getServicesByServiceTypeId(id, page, size);
     }
 

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,9 +45,10 @@ public class PartnersController {
     }
 
     @Operation(summary = "Get all per page and size.", tags = partnersTag)
-    @GetMapping("/partners/{page}/{size}")
+    @GetMapping("/partners")
     @ResponseStatus(HttpStatus.OK)
-    public List<Partners> getAllPartners(@PathVariable Integer page, @PathVariable Integer size) {
+    public List<Partners> getAllPartners(@RequestParam(required = false, defaultValue = "0") Integer page,
+            @RequestParam(required = false, defaultValue = "50") Integer size) {
         return service.getPartners(page, size);
     }
 

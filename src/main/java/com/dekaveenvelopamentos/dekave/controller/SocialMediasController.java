@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,9 +42,10 @@ public class SocialMediasController {
     }
 
     @Operation(summary = "Get all per page and size.", tags = socialMediaTag)
-    @GetMapping("/socialmedias/{page}/{size}")
+    @GetMapping("/socialmedias")
     @ResponseStatus(HttpStatus.OK)
-    public List<SocialMedias> getAllSocialMedias(@PathVariable Integer page, @PathVariable Integer size) {
+    public List<SocialMedias> getAllSocialMedias(@RequestParam(required = false, defaultValue = "0") Integer page,
+            @RequestParam(required = false, defaultValue = "50") Integer size) {
         return service.getSocialMedias(page, size);
     }
 
