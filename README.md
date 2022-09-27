@@ -24,8 +24,8 @@
     - Username: postgres
     - Password: postgres
 
-Endereço base: http://localhost:8080/
-Swagger ui: http://localhost:8080/swagger-ui/index.html
+Endereço base: http://localhost:8080/ <br />
+Swagger ui: http://localhost:8080/swagger-ui/index.html <br />
 Api docs: http://localhost:8080/v3/api-docs
 
 ## Modelagem de dados
