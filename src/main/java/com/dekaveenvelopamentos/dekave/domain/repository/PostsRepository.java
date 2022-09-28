@@ -22,4 +22,7 @@ public interface PostsRepository extends JpaRepository<Posts, UUID> {
     Page<Posts> findAllByServiceId(UUID serviceId, Pageable pageable);
 
     Long countByService(Services service);
+
+    @Query("from Posts p where p.service.id = :id and p.postsOrder = :order")
+    Posts findByServiceIdAndPosition(@Param("id") UUID serviceId, @Param("order") Long postsOrder);
 }

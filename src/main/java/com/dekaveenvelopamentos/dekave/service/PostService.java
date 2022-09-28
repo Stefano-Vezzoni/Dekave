@@ -17,6 +17,8 @@ import com.dekaveenvelopamentos.dekave.domain.entity.Posts;
 import com.dekaveenvelopamentos.dekave.domain.repository.PostsRepository;
 import com.dekaveenvelopamentos.dekave.domain.repository.ServicesRepository;
 import com.dekaveenvelopamentos.dekave.dto.PostDTO;
+import com.dekaveenvelopamentos.dekave.exception.ReorderActionException;
+import com.dekaveenvelopamentos.dekave.exception.ReorderPositionException;
 
 @Service
 public class PostService {
@@ -79,6 +81,28 @@ public class PostService {
     }
 
     @Transactional
+    public void reorder(UUID serviceId, Long currentPosition, String action)
+            throws ReorderPositionException, ReorderActionException {
+
+        Posts currentPost = repository.findByServiceIdAndPosition(serviceId, currentPosition);
+        Posts nextPost = repository.findByServiceIdAndPosition(serviceId, currentPosition + 1);
+        Posts previousService = repository.findByServiceIdAndPosition(serviceId, currentPosition - 1);
+
+        if (action.equalsIgnoreCase("down") && action.equalsIgnoreCase("up")) {
+            throw new ReorderActionException();
+
+        } else if (action.equalsIgnoreCase("down")) {
+            reorderDown(currentPost, nextPost, currentPosition);
+
+        } else if (action.equalsIgnoreCase("up")) {
+            if (currentPosition == 1) {
+                throw new ReorderPositionException();
+            }
+            reorderUp(currentPost, previousService, currentPosition);
+        }
+    }
+
+    @Transactional
     public void deleteById(UUID id) {
 
         // Get service ID to re-order after delete.
@@ -93,5 +117,31 @@ public class PostService {
         for (Posts post : posts) {
             post.setPostsOrder(index++);
         }
+    }
+
+    @Transactional
+    public void reorderDown(Posts current, Posts next, Long currentPosition) throws ReorderPositionException {
+
+        if (next != null) {
+            // resetting positions
+            current.setPostsOrder(-1L);
+            next.setPostsOrder(-2L);
+
+            current.setPostsOrder(currentPosition + 1);
+            next.setPostsOrder(currentPosition);
+        } else {
+            throw new ReorderPositionException();
+        }
+
+    }
+
+    @Transactional
+    public void reorderUp(Posts current, Posts previous, Long currentPosition) {
+        // resetting positions
+        current.setPostsOrder(-1L);
+        previous.setPostsOrder(-2L);
+
+        current.setPostsOrder(currentPosition - 1);
+        previous.setPostsOrder(currentPosition);
     }
 }

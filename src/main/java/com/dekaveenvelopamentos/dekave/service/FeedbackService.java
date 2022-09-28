@@ -17,6 +17,8 @@ import com.dekaveenvelopamentos.dekave.domain.entity.Feedbacks;
 import com.dekaveenvelopamentos.dekave.domain.repository.FeedbacksRepository;
 import com.dekaveenvelopamentos.dekave.dto.ActiveDTO;
 import com.dekaveenvelopamentos.dekave.dto.FeedbacksDTO;
+import com.dekaveenvelopamentos.dekave.exception.ReorderActionException;
+import com.dekaveenvelopamentos.dekave.exception.ReorderPositionException;
 
 @Service
 public class FeedbackService {
@@ -90,6 +92,27 @@ public class FeedbackService {
     }
 
     @Transactional
+    public void reorder(Long currentPosition, String action) throws ReorderPositionException, ReorderActionException {
+
+        Feedbacks currentFeedback = repository.findByFeedbackOrder(currentPosition);
+        Feedbacks nextFeedback = repository.findByFeedbackOrder(currentPosition + 1);
+        Feedbacks previousFeedback = repository.findByFeedbackOrder(currentPosition - 1);
+
+        if (action.equalsIgnoreCase("down") && action.equalsIgnoreCase("up")) {
+            throw new ReorderActionException();
+
+        } else if (action.equalsIgnoreCase("down")) {
+            reorderDown(currentFeedback, nextFeedback, currentPosition);
+
+        } else if (action.equalsIgnoreCase("up")) {
+            if (currentPosition == 1) {
+                throw new ReorderPositionException();
+            }
+            reorderUp(currentFeedback, previousFeedback, currentPosition);
+        }
+    }
+
+    @Transactional
     public void deleteById(UUID id) {
 
         genericService.deleteFile(repository.findById(id).get().getAvatar());
@@ -102,5 +125,31 @@ public class FeedbackService {
         for (Feedbacks feedback : feedbacks) {
             feedback.setFeedbackOrder(index++);
         }
+    }
+
+    @Transactional
+    public void reorderDown(Feedbacks current, Feedbacks next, Long currentPosition) throws ReorderPositionException {
+
+        if (next != null) {
+            // resetting positions
+            current.setFeedbackOrder(-1L);
+            next.setFeedbackOrder(-2L);
+
+            current.setFeedbackOrder(currentPosition + 1);
+            next.setFeedbackOrder(currentPosition);
+        } else {
+            throw new ReorderPositionException();
+        }
+
+    }
+
+    @Transactional
+    public void reorderUp(Feedbacks current, Feedbacks previous, Long currentPosition) {
+        // resetting positions
+        current.setFeedbackOrder(-1L);
+        previous.setFeedbackOrder(-2L);
+
+        current.setFeedbackOrder(currentPosition - 1);
+        previous.setFeedbackOrder(currentPosition);
     }
 }

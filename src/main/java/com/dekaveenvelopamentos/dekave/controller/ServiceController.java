@@ -24,6 +24,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.dekaveenvelopamentos.dekave.domain.entity.Services;
 import com.dekaveenvelopamentos.dekave.dto.ActiveDTO;
 import com.dekaveenvelopamentos.dekave.dto.ServicesDTO;
+import com.dekaveenvelopamentos.dekave.exception.ReorderActionException;
+import com.dekaveenvelopamentos.dekave.exception.ReorderPositionException;
 import com.dekaveenvelopamentos.dekave.service.ServiceService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -74,6 +76,15 @@ public class ServiceController {
     @ResponseStatus(HttpStatus.OK)
     public void activeById(@PathVariable UUID id, @RequestBody @Valid ActiveDTO activeDTO) {
         service.activeById(id, activeDTO);
+    }
+
+    @Operation(summary = "Reorder.", tags = servicesTag)
+    @PutMapping("/services/reorder")
+    @ResponseStatus(HttpStatus.OK)
+    public void reorder(@RequestParam UUID id, @RequestParam Long currentPosition,
+            @RequestParam String action)
+            throws ReorderPositionException, ReorderActionException {
+        service.reorder(id, currentPosition, action);
     }
 
     @Operation(summary = "Delete by id.", tags = servicesTag)

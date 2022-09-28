@@ -22,6 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.dekaveenvelopamentos.dekave.domain.entity.Posts;
 import com.dekaveenvelopamentos.dekave.dto.PostDTO;
+import com.dekaveenvelopamentos.dekave.exception.ReorderActionException;
+import com.dekaveenvelopamentos.dekave.exception.ReorderPositionException;
 import com.dekaveenvelopamentos.dekave.service.PostService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -67,6 +69,15 @@ public class PostsController {
             @RequestPart("file") MultipartFile file) throws IOException {
         service.updatePost(id, postDTO, file);
 
+    }
+
+    @Operation(summary = "Reorder.", tags = postsTag)
+    @PutMapping("/posts/reorder")
+    @ResponseStatus(HttpStatus.OK)
+    public void reorder(@RequestParam UUID id, @RequestParam Long currentPosition,
+            @RequestParam String action)
+            throws ReorderPositionException, ReorderActionException {
+        service.reorder(id, currentPosition, action);
     }
 
     @Operation(summary = "Delete by id.", tags = postsTag)

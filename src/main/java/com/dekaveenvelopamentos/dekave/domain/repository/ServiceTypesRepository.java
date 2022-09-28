@@ -9,4 +9,6 @@ import com.dekaveenvelopamentos.dekave.domain.entity.ServiceTypes;
 
 @Repository
 public interface ServiceTypesRepository extends JpaRepository<ServiceTypes, UUID> {
+
+    ServiceTypes findByServiceTypeOrder(Long serviceTypeOrder);
 }

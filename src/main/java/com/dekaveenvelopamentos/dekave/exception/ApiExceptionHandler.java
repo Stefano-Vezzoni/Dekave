@@ -68,4 +68,26 @@ public class ApiExceptionHandler {
 		return errorMessage;
 	}
 
+	@ExceptionHandler(value = { ReorderPositionException.class })
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public ErrorMessage ReorderPositionException() {
+
+		ErrorMessage errorMessage = new ErrorMessage(
+				HttpStatus.BAD_REQUEST.value(),
+				new Date(),
+				ErrorMessageEnum.REORDER_POSITION.getMessage());
+		return errorMessage;
+	}
+
+	@ExceptionHandler(value = { ReorderActionException.class })
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public ErrorMessage ReorderActionException() {
+
+		ErrorMessage errorMessage = new ErrorMessage(
+				HttpStatus.BAD_REQUEST.value(),
+				new Date(),
+				ErrorMessageEnum.REORDER_ACTION.getMessage());
+		return errorMessage;
+	}
+
 }

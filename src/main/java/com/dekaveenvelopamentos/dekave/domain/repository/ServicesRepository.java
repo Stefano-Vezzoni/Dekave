@@ -22,4 +22,8 @@ public interface ServicesRepository extends JpaRepository<Services, UUID> {
     Page<Services> findAllByServiceTypeId(UUID serviceTypeId, Pageable pageable);
 
     Long countByServiceType(ServiceTypes serviceType);
+
+    @Query("from Services s where s.serviceType.id = :id and s.serviceOrder = :order")
+    Services findByServiceTypeIdAndPosition(@Param("id") UUID serviceTypeId, @Param("order") Long serviceOrder);
+
 }

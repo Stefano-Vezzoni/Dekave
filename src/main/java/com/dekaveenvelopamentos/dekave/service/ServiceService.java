@@ -18,6 +18,8 @@ import com.dekaveenvelopamentos.dekave.domain.repository.ServiceTypesRepository;
 import com.dekaveenvelopamentos.dekave.domain.repository.ServicesRepository;
 import com.dekaveenvelopamentos.dekave.dto.ActiveDTO;
 import com.dekaveenvelopamentos.dekave.dto.ServicesDTO;
+import com.dekaveenvelopamentos.dekave.exception.ReorderActionException;
+import com.dekaveenvelopamentos.dekave.exception.ReorderPositionException;
 
 @Service
 public class ServiceService {
@@ -95,6 +97,28 @@ public class ServiceService {
     }
 
     @Transactional
+    public void reorder(UUID serviceTypeId, Long currentPosition, String action)
+            throws ReorderPositionException, ReorderActionException {
+
+        Services currentService = repository.findByServiceTypeIdAndPosition(serviceTypeId, currentPosition);
+        Services nextService = repository.findByServiceTypeIdAndPosition(serviceTypeId, currentPosition + 1);
+        Services previousService = repository.findByServiceTypeIdAndPosition(serviceTypeId, currentPosition - 1);
+
+        if (action.equalsIgnoreCase("down") && action.equalsIgnoreCase("up")) {
+            throw new ReorderActionException();
+
+        } else if (action.equalsIgnoreCase("down")) {
+            reorderDown(currentService, nextService, currentPosition);
+
+        } else if (action.equalsIgnoreCase("up")) {
+            if (currentPosition == 1) {
+                throw new ReorderPositionException();
+            }
+            reorderUp(currentService, previousService, currentPosition);
+        }
+    }
+
+    @Transactional
     public void deleteById(UUID id) {
 
         // Get serviceType ID to re-order after delete.
@@ -109,5 +133,31 @@ public class ServiceService {
         for (Services service : services) {
             service.setServiceOrder(index++);
         }
+    }
+
+    @Transactional
+    public void reorderDown(Services current, Services next, Long currentPosition) throws ReorderPositionException {
+
+        if (next != null) {
+            // resetting positions
+            current.setServiceOrder(-1L);
+            next.setServiceOrder(-2L);
+
+            current.setServiceOrder(currentPosition + 1);
+            next.setServiceOrder(currentPosition);
+        } else {
+            throw new ReorderPositionException();
+        }
+
+    }
+
+    @Transactional
+    public void reorderUp(Services current, Services previous, Long currentPosition) {
+        // resetting positions
+        current.setServiceOrder(-1L);
+        previous.setServiceOrder(-2L);
+
+        current.setServiceOrder(currentPosition - 1);
+        previous.setServiceOrder(currentPosition);
     }
 }

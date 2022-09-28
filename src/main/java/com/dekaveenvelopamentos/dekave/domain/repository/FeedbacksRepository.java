@@ -9,4 +9,6 @@ import com.dekaveenvelopamentos.dekave.domain.entity.Feedbacks;
 
 @Repository
 public interface FeedbacksRepository extends JpaRepository<Feedbacks, UUID> {
+
+    Feedbacks findByFeedbackOrder(Long feedbackOrder);
 }
