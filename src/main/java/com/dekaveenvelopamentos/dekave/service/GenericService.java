@@ -53,6 +53,11 @@ public class GenericService {
 
     public String uploadImage(String path, MultipartFile file) throws IOException {
 
+        File directory = new File(uploadFileDir + path);
+        if (!directory.exists()) {
+            directory.mkdir();
+        }
+
         String filePath = path + UUID.randomUUID() + "_" + file.getOriginalFilename();
 
         Path newFilePath = Path.of(uploadFileDir + filePath);
