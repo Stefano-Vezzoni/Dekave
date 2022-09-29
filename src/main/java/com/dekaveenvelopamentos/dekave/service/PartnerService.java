@@ -56,6 +56,13 @@ public class PartnerService {
         }
     }
 
+    public byte[] getImageById(UUID id) throws IOException {
+
+        String logoPath = repository.getById(id).getLogo();
+
+        return genericService.getImageById(id, logoPath);
+    }
+
     @Transactional
     public void savePartner(PartnersDTO partnersDTO, MultipartFile file) throws IOException {
 

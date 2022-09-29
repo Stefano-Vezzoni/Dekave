@@ -43,6 +43,13 @@ public class FeedbackService {
         return repository.findAll(pageable).getContent();
     }
 
+    public byte[] getImageById(UUID id) throws IOException {
+
+        String avatarPath = repository.getById(id).getAvatar();
+
+        return genericService.getImageById(id, avatarPath);
+    }
+
     @Transactional
     public void activeById(UUID id, ActiveDTO activeDTO) {
 

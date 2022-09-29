@@ -54,6 +54,13 @@ public class PartnersController {
         return service.getPartners(page, size);
     }
 
+    @Operation(summary = "Get image by id.", tags = partnersTag)
+    @GetMapping("/partners/image/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public byte[] getImageById(@PathVariable UUID id) throws IOException {
+        return service.getImageById(id);
+    }
+
     @Operation(summary = "Save new partner.", tags = partnersTag)
     @PostMapping(value = "/partners/save", consumes = { "multipart/form-data" })
     @ResponseStatus(HttpStatus.CREATED)

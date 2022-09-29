@@ -48,6 +48,13 @@ public class PostService {
         return postsByServiceId.getContent();
     }
 
+    public byte[] getImageById(UUID id) throws IOException {
+
+        String photoPath = repository.getById(id).getPhoto();
+
+        return genericService.getImageById(id, photoPath);
+    }
+
     @Transactional
     public void savePost(UUID serviceId, PostDTO postDTO, MultipartFile file) throws IOException {
 

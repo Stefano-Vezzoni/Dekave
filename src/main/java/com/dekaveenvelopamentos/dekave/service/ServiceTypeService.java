@@ -56,6 +56,13 @@ public class ServiceTypeService {
         }
     }
 
+    public byte[] getImageById(UUID id) throws IOException {
+
+        String photoPath = repository.getById(id).getPhoto();
+
+        return genericService.getImageById(id, photoPath);
+    }
+
     @Transactional
     public void saveServiceType(ServiceTypesDTO serviceTypesDTO, MultipartFile file) throws IOException {
 

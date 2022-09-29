@@ -55,6 +55,13 @@ public class ServiceController {
         return service.getServicesByServiceTypeId(id, page, size);
     }
 
+    @Operation(summary = "Get image by id.", tags = servicesTag)
+    @GetMapping("/services/image/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public byte[] getImageById(@PathVariable UUID id) throws IOException {
+        return service.getImageById(id);
+    }
+
     @Operation(summary = "Save new service.", tags = servicesTag)
     @PostMapping(value = "/services/save/{id}", consumes = { "multipart/form-data" })
     @ResponseStatus(HttpStatus.NO_CONTENT)

@@ -53,6 +53,13 @@ public class PostsController {
         return service.getPostsByServiceId(id, page, size);
     }
 
+    @Operation(summary = "Get image by id.", tags = postsTag)
+    @GetMapping("/posts/image/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public byte[] getImageById(@PathVariable UUID id) throws IOException {
+        return service.getImageById(id);
+    }
+
     @Operation(summary = "Save new post.", tags = postsTag)
     @PostMapping(value = "/posts/save/{id}", consumes = { "multipart/form-data" })
     @ResponseStatus(HttpStatus.CREATED)

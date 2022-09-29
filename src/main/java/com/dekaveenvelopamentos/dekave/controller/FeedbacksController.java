@@ -54,6 +54,13 @@ public class FeedbacksController {
         return service.getFeedbacks(page, size);
     }
 
+    @Operation(summary = "Get image by id.", tags = feedbacksTag)
+    @GetMapping("/feedbacks/image/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public byte[] getImageById(@PathVariable UUID id) throws IOException {
+        return service.getImageById(id);
+    }
+
     @Operation(summary = "Save new feedback.", tags = feedbacksTag)
     @PostMapping(value = "/feedbacks/save", consumes = { "multipart/form-data" })
     @ResponseStatus(HttpStatus.CREATED)
