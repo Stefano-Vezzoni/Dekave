@@ -3,6 +3,7 @@ package com.dekaveenvelopamentos.dekave.service;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -70,10 +71,7 @@ public class GenericService {
 
     public byte[] getImageById(UUID id, String imagePath) throws IOException {
 
-        InputStream inputStream = getClass().getClassLoader()
-                .getResourceAsStream(imagePath);
-
-        BufferedImage bufferedImage = ImageIO.read(inputStream);
+        BufferedImage bufferedImage = ImageIO.read(new FileInputStream(uploadFileDir + imagePath));
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
