@@ -24,7 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class GenericService {
 
     @Value("${upload.file.dir}")
-    private String uploadFileDir;
+    private String uploadFileDirectory;
 
     public Pageable pageable(Integer page, Integer size) {
 
@@ -54,12 +54,12 @@ public class GenericService {
 
     public String uploadImage(String path, MultipartFile file) throws IOException {
 
-        File directory = new File(uploadFileDir + path);
+        File directory = new File(uploadFileDirectory + path);
         directory.mkdirs();
 
         String filePath = path + UUID.randomUUID() + "_" + file.getOriginalFilename();
 
-        Path newFilePath = Path.of(uploadFileDir + filePath);
+        Path newFilePath = Path.of(uploadFileDirectory + filePath);
 
         InputStream inputStream = file.getInputStream();
 
@@ -71,7 +71,7 @@ public class GenericService {
 
     public byte[] getImageById(UUID id, String imagePath) throws IOException {
 
-        BufferedImage bufferedImage = ImageIO.read(new FileInputStream(uploadFileDir + imagePath));
+        BufferedImage bufferedImage = ImageIO.read(new FileInputStream(uploadFileDirectory + imagePath));
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
