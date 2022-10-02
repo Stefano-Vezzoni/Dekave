@@ -56,7 +56,7 @@ public class PartnersController {
     }
 
     @Operation(summary = "Get image by id.", tags = partnersTag)
-    @GetMapping("/feedbacks/image/{id}")
+    @GetMapping("/partners/image/{id}")
     public ResponseEntity<?> getImageById(@PathVariable UUID id) throws IOException {
         return service.getImageById(id);
     }
