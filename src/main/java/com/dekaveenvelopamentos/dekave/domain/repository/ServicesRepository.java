@@ -26,4 +26,5 @@ public interface ServicesRepository extends JpaRepository<Services, UUID> {
     @Query("from Services s where s.serviceType.id = :id and s.serviceOrder = :order")
     Services findByServiceTypeIdAndPosition(@Param("id") UUID serviceTypeId, @Param("order") Long serviceOrder);
 
+    Services findByPhoto(String avatar);
 }

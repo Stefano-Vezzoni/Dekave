@@ -11,4 +11,6 @@ import com.dekaveenvelopamentos.dekave.domain.entity.ServiceTypes;
 public interface ServiceTypesRepository extends JpaRepository<ServiceTypes, UUID> {
 
     ServiceTypes findByServiceTypeOrder(Long serviceTypeOrder);
+
+    ServiceTypes findByPhoto(String avatar);
 }

@@ -57,11 +57,8 @@ public class ServiceTypeService {
         }
     }
 
-    public ResponseEntity<?> getImageById(UUID id) throws IOException {
-
-        String photoPath = repository.getById(id).getPhoto();
-
-        return genericService.getImageById(id, photoPath);
+    public ResponseEntity<?> getImageById(String fileName) throws IOException {
+        return genericService.getImageByFileName(path + fileName);
     }
 
     @Transactional

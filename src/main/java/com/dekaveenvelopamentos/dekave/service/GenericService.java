@@ -26,6 +26,9 @@ public class GenericService {
     @Value("${upload.file.dir}")
     private String uploadFileDirectory;
 
+    @Value("${base.url}")
+    private String baseUrl;
+
     public Pageable pageable(Integer page, Integer size) {
 
         Pageable pageable = PageRequest.of(page, size);
@@ -65,11 +68,11 @@ public class GenericService {
 
         Files.copy(inputStream, newFilePath, StandardCopyOption.REPLACE_EXISTING);
 
-        return filePath;
+        return baseUrl + filePath;
 
     }
 
-    public ResponseEntity<?> getImageById(UUID id, String imagePath) throws IOException {
+    public ResponseEntity<?> getImageByFileName(String imagePath) throws IOException {
 
         Resource resource = new ClassPathResource(imagePath);
 

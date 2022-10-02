@@ -25,4 +25,6 @@ public interface PostsRepository extends JpaRepository<Posts, UUID> {
 
     @Query("from Posts p where p.service.id = :id and p.postsOrder = :order")
     Posts findByServiceIdAndPosition(@Param("id") UUID serviceId, @Param("order") Long postsOrder);
+
+    Posts findByPhoto(String avatar);
 }

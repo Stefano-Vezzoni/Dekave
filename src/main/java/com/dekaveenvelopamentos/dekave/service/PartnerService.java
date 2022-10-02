@@ -57,11 +57,8 @@ public class PartnerService {
         }
     }
 
-    public ResponseEntity<?> getImageById(UUID id) throws IOException {
-
-        String logoPath = repository.getById(id).getLogo();
-
-        return genericService.getImageById(id, logoPath);
+    public ResponseEntity<?> getImageById(String fileName) throws IOException {
+        return genericService.getImageByFileName(path + fileName);
     }
 
     @Transactional

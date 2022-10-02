@@ -27,6 +27,9 @@ public class FeedbackService {
     @Value("${images.folder.feedbacks}")
     private String path;
 
+    @Value("${base.url}")
+    private String baseUrl;
+
     @Autowired
     private FeedbacksRepository repository;
 
@@ -44,11 +47,8 @@ public class FeedbackService {
         return repository.findAll(pageable).getContent();
     }
 
-    public ResponseEntity<?> getImageById(UUID id) throws IOException {
-
-        String avatarPath = repository.getById(id).getAvatar();
-
-        return genericService.getImageById(id, avatarPath);
+    public ResponseEntity<?> getImageById(String fileName) throws IOException {
+        return genericService.getImageByFileName(path + fileName);
     }
 
     @Transactional

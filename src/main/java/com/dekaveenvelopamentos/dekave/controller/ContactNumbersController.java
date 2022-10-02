@@ -25,7 +25,7 @@ import com.dekaveenvelopamentos.dekave.service.ContactNumberService;
 import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("${api.v1}")
 public class ContactNumbersController {
 
     private static final String contactNumbersTag = "Contact Numbers";

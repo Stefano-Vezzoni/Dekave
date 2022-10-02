@@ -30,7 +30,7 @@ import com.dekaveenvelopamentos.dekave.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("${api.v1}")
 public class PostsController {
 
     private static final String postsTag = "Posts";
@@ -55,9 +55,9 @@ public class PostsController {
     }
 
     @Operation(summary = "Get image by id.", tags = postsTag)
-    @GetMapping("/posts/image/{id}")
-    public ResponseEntity<?> getImageById(@PathVariable UUID id) throws IOException {
-        return service.getImageById(id);
+    @GetMapping("/images/posts/{fileName}")
+    public ResponseEntity<?> getImageById(@PathVariable String fileName) throws IOException {
+        return service.getImageById(fileName);
     }
 
     @Operation(summary = "Save new post.", tags = postsTag)
