@@ -12,7 +12,7 @@
  - Lombok
  - Springdoc OpenAPI
 
-## Dependências
+## Instalações necessárias
 
 - IDE de sua escolha
 - JDK 17.0.2
