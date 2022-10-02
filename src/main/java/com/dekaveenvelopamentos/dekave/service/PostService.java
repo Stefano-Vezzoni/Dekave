@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -48,7 +49,7 @@ public class PostService {
         return postsByServiceId.getContent();
     }
 
-    public byte[] getImageById(UUID id) throws IOException {
+    public ResponseEntity<?> getImageById(UUID id) throws IOException {
 
         String photoPath = repository.getById(id).getPhoto();
 

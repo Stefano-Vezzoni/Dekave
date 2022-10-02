@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -55,9 +56,8 @@ public class PartnersController {
     }
 
     @Operation(summary = "Get image by id.", tags = partnersTag)
-    @GetMapping("/partners/image/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public byte[] getImageById(@PathVariable UUID id) throws IOException {
+    @GetMapping("/feedbacks/image/{id}")
+    public ResponseEntity<?> getImageById(@PathVariable UUID id) throws IOException {
         return service.getImageById(id);
     }
 

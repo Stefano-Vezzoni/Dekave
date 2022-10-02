@@ -1,9 +1,6 @@
 package com.dekaveenvelopamentos.dekave.service;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -11,12 +8,15 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 
-import javax.imageio.ImageIO;
-
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -69,15 +69,16 @@ public class GenericService {
 
     }
 
-    public byte[] getImageById(UUID id, String imagePath) throws IOException {
+    public ResponseEntity<?> getImageById(UUID id, String imagePath) throws IOException {
 
-        BufferedImage bufferedImage = ImageIO.read(new FileInputStream(uploadFileDirectory + imagePath));
+        Resource resource = new ClassPathResource(imagePath);
 
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        byte[] byteArray = resource.getInputStream().readAllBytes();
 
-        ImageIO.write(bufferedImage, "jpg", outputStream);
-
-        return outputStream.toByteArray();
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .contentType(MediaType.valueOf("image/jpg"))
+                .body(byteArray);
     }
 
     public void deleteFile(String Path) {
