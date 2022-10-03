@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import javax.transaction.Transactional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
@@ -66,7 +67,7 @@ public class ServiceTypeService {
 
         ServiceTypes serviceTypes = new ServiceTypes();
 
-        serviceTypes.setTitle(serviceTypesDTO.getTitle());
+        BeanUtils.copyProperties(serviceTypesDTO, serviceTypes);
         serviceTypes.setActive(true);
         serviceTypes.setServiceTypeOrder(repository.count() + 1);
         serviceTypes.setPhoto(genericService.uploadImage(path, file));

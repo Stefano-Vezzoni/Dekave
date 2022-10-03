@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import javax.transaction.Transactional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -38,10 +39,7 @@ public class DekaveDataService {
 
         DekaveData dekaveData = new DekaveData();
 
-        dekaveData.setName(dataDTO.getName());
-        dekaveData.setLocation(dataDTO.getLocation());
-        dekaveData.setCopyright(dataDTO.getCopyright());
-        dekaveData.setContact_message(dataDTO.getContactMessage());
+        BeanUtils.copyProperties(dataDTO, dekaveData);
 
         repository.save(dekaveData);
     }

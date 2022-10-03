@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import javax.transaction.Transactional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
@@ -66,8 +67,7 @@ public class PartnerService {
 
         Partners partner = new Partners();
 
-        partner.setName(partnersDTO.getName());
-        partner.setActive(true);
+        BeanUtils.copyProperties(partnersDTO, partner);
         partner.setPartnerOrder(repository.count() + 1);
         partner.setLogo(genericService.uploadImage(path, file));
 

@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import javax.transaction.Transactional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -72,8 +73,7 @@ public class ServiceService {
 
         Services service = new Services();
 
-        service.setTitle(servicesDTO.getTitle());
-        service.setResume(servicesDTO.getResume());
+        BeanUtils.copyProperties(servicesDTO, service);
         service.setActive(true);
         service.setServiceType(serviceTypesRepository.findById(serviceTypeId).get());
         service.setServiceOrder(

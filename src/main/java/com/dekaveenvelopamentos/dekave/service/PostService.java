@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import javax.transaction.Transactional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -58,8 +59,7 @@ public class PostService {
 
         Posts post = new Posts();
 
-        post.setTitle(postDTO.getTitle());
-        post.setDescription(postDTO.getDescription());
+        BeanUtils.copyProperties(postDTO, post);
         post.setPhoto(genericService.uploadImage(path, file));
         post.setPostsOrder(repository.countByService(servicesRepository.findById(serviceId).get()) + 1);
         post.setService(servicesRepository.findById(serviceId).get());

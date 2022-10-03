@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import javax.transaction.Transactional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -50,14 +51,12 @@ public class SocialMediaService {
     @Transactional
     public void saveSocialMedia(SocialMediaDTO socialMediaDTO) {
 
-        SocialMedias socialMedias = new SocialMedias();
+        SocialMedias socialMedia = new SocialMedias();
 
-        socialMedias.setName(socialMediaDTO.getName());
-        socialMedias.setIcon(socialMediaDTO.getIcon());
-        socialMedias.setUrl(socialMediaDTO.getUrl());
-        socialMedias.setActive(true);
+        BeanUtils.copyProperties(socialMediaDTO, socialMedia);
+        socialMedia.setActive(true);
 
-        repository.save(socialMedias);
+        repository.save(socialMedia);
     }
 
     @Transactional

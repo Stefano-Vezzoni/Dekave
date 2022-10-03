@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import javax.transaction.Transactional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -38,8 +39,7 @@ public class ContactNumberService {
 
         ContactNumbers contactNumbers = new ContactNumbers();
 
-        contactNumbers.setPhone(contactNumberDTO.getPhone());
-        contactNumbers.setWhatsapp(contactNumberDTO.isWhatsapp());
+        BeanUtils.copyProperties(contactNumberDTO, contactNumbers);
 
         repository.save(contactNumbers);
     }

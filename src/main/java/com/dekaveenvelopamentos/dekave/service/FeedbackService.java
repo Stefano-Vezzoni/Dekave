@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import javax.transaction.Transactional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
@@ -69,9 +70,7 @@ public class FeedbackService {
 
         Feedbacks feedback = new Feedbacks();
 
-        feedback.setName(feedbacksDTO.getName());
-        feedback.setTitle(feedbacksDTO.getTitle());
-        feedback.setComment(feedbacksDTO.getComment());
+        BeanUtils.copyProperties(feedbacksDTO, feedback);
         feedback.setActive(true);
         feedback.setFeedbackOrder(repository.count() + 1);
         feedback.setAvatar(genericService.uploadImage(path, file));
