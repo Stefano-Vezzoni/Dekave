@@ -32,7 +32,7 @@ import com.dekaveenvelopamentos.dekave.service.PartnerService;
 import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
-@RequestMapping("${api.v1}")
+@RequestMapping("${api.v1}/partners")
 public class PartnersController {
 
     private static final String partnersTag = "Partners";
@@ -41,14 +41,14 @@ public class PartnersController {
     private PartnerService service;
 
     @Operation(summary = "Get by id.", tags = partnersTag)
-    @GetMapping("/partners/{id}")
+    @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Partners getPartnerById(@PathVariable UUID id) {
         return service.getById(id);
     }
 
     @Operation(summary = "Get all per page and size.", tags = partnersTag)
-    @GetMapping("/partners")
+    @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     public List<Partners> getAllPartners(@RequestParam(required = false, defaultValue = "0") Integer page,
             @RequestParam(required = false, defaultValue = "50") Integer size) {
@@ -56,13 +56,13 @@ public class PartnersController {
     }
 
     @Operation(summary = "Get image by id.", tags = partnersTag)
-    @GetMapping("/images/partners/{fileName}")
+    @GetMapping("/images/{fileName}")
     public ResponseEntity<?> getImageById(@PathVariable String fileName) throws IOException {
         return service.getImageById(fileName);
     }
 
     @Operation(summary = "Save new partner.", tags = partnersTag)
-    @PostMapping(value = "/partners/save", consumes = { "multipart/form-data" })
+    @PostMapping(value = "/save", consumes = { "multipart/form-data" })
     @ResponseStatus(HttpStatus.CREATED)
     public void savePartner(@RequestPart("partner") @Valid PartnersDTO partnersDTO,
             @RequestPart("file") MultipartFile file) throws IOException {
@@ -70,7 +70,7 @@ public class PartnersController {
     }
 
     @Operation(summary = "Update by id.", tags = partnersTag)
-    @PutMapping(value = "/partners/update/{id}", consumes = { "multipart/form-data" })
+    @PutMapping(value = "/update/{id}", consumes = { "multipart/form-data" })
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updatePartner(@PathVariable UUID id, @RequestPart("partner") PartnersDTO partnersDTO,
             @RequestPart("file") MultipartFile file) throws IOException {
@@ -78,14 +78,14 @@ public class PartnersController {
     }
 
     @Operation(summary = "Activate/Disable by id.", tags = partnersTag)
-    @PutMapping("/partners/active/{id}")
+    @PutMapping("/active/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void activeById(@PathVariable UUID id, @RequestBody @Valid ActiveDTO activeDTO) {
         service.activeById(id, activeDTO);
     }
 
     @Operation(summary = "Reorder.", tags = partnersTag)
-    @PutMapping("/partners/reorder")
+    @PutMapping("/reorder")
     @ResponseStatus(HttpStatus.OK)
     public void reorder(@RequestParam Long currentPosition, @RequestParam String action)
             throws ReorderPositionException, ReorderActionException {
@@ -93,7 +93,7 @@ public class PartnersController {
     }
 
     @Operation(summary = "Delete by id.", tags = partnersTag)
-    @DeleteMapping("/partners/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletePartnerById(@PathVariable UUID id) {
         service.deleteById(id);

@@ -32,7 +32,7 @@ import com.dekaveenvelopamentos.dekave.service.FeedbackService;
 import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
-@RequestMapping("${api.v1}")
+@RequestMapping("${api.v1}/feedbacks")
 public class FeedbacksController {
 
     private static final String feedbacksTag = "Feedbacks";
@@ -41,14 +41,14 @@ public class FeedbacksController {
     private FeedbackService service;
 
     @Operation(summary = "Get by id.", tags = feedbacksTag)
-    @GetMapping("/feedbacks/{id}")
+    @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Feedbacks getFeedbackById(@PathVariable UUID id) {
         return service.getById(id);
     }
 
     @Operation(summary = "Get all per page and size.", tags = feedbacksTag)
-    @GetMapping("/feedbacks")
+    @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     public List<Feedbacks> getAllFeedbacks(@RequestParam(required = false, defaultValue = "0") Integer page,
             @RequestParam(required = false, defaultValue = "50") Integer size) {
@@ -56,13 +56,13 @@ public class FeedbacksController {
     }
 
     @Operation(summary = "Get image by id.", tags = feedbacksTag)
-    @GetMapping("/images/feedbacks/{fileName}")
+    @GetMapping("/images/{fileName}")
     public ResponseEntity<?> getImageById(@PathVariable String fileName) throws IOException {
         return service.getImageById(fileName);
     }
 
     @Operation(summary = "Save new feedback.", tags = feedbacksTag)
-    @PostMapping(value = "/feedbacks/save", consumes = { "multipart/form-data" })
+    @PostMapping(value = "/save", consumes = { "multipart/form-data" })
     @ResponseStatus(HttpStatus.CREATED)
     public void saveFeedback(@RequestPart("feedback") @Valid FeedbacksDTO feedbacksDTO,
             @RequestPart("file") MultipartFile file) throws IOException {
@@ -70,7 +70,7 @@ public class FeedbacksController {
     }
 
     @Operation(summary = "Update by id.", tags = feedbacksTag)
-    @PutMapping(value = "/feedbacks/update/{id}", consumes = { "multipart/form-data" })
+    @PutMapping(value = "/update/{id}", consumes = { "multipart/form-data" })
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateFeedback(@PathVariable UUID id, @RequestPart("feedback") FeedbacksDTO feedbacksDTO,
             @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
@@ -78,14 +78,14 @@ public class FeedbacksController {
     }
 
     @Operation(summary = "Activate/Disable by id.", tags = feedbacksTag)
-    @PutMapping("/feedbacks/active/{id}")
+    @PutMapping("/active/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void activeById(@PathVariable UUID id, @RequestBody @Valid ActiveDTO activeDTO) {
         service.activeById(id, activeDTO);
     }
 
     @Operation(summary = "Reorder.", tags = feedbacksTag)
-    @PutMapping("/feedbacks/reorder")
+    @PutMapping("/reorder")
     @ResponseStatus(HttpStatus.OK)
     public void reorder(@RequestParam Long currentPosition, @RequestParam String action)
             throws ReorderPositionException, ReorderActionException {
@@ -93,7 +93,7 @@ public class FeedbacksController {
     }
 
     @Operation(summary = "Delete by id.", tags = feedbacksTag)
-    @DeleteMapping("/feedbacks/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteFeedbackById(@PathVariable UUID id) {
         service.deleteById(id);

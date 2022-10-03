@@ -32,7 +32,7 @@ import com.dekaveenvelopamentos.dekave.service.ServiceService;
 import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
-@RequestMapping("${api.v1}")
+@RequestMapping("${api.v1}/services")
 public class ServiceController {
 
     private static final String servicesTag = "Services";
@@ -41,14 +41,14 @@ public class ServiceController {
     private ServiceService service;
 
     @Operation(summary = "Get by id.", tags = servicesTag)
-    @GetMapping("/services/{id}")
+    @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Services getServiceById(@PathVariable UUID id) {
         return service.getById(id);
     }
 
     @Operation(summary = "Get all per page and size.", tags = servicesTag)
-    @GetMapping("/services")
+    @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     public List<Services> getAllServicesByServiceTypeId(@RequestParam UUID id,
             @RequestParam(required = false, defaultValue = "0") Integer page,
@@ -57,13 +57,13 @@ public class ServiceController {
     }
 
     @Operation(summary = "Get image by id.", tags = servicesTag)
-    @GetMapping("/images/services/{fileName}")
+    @GetMapping("/images/{fileName}")
     public ResponseEntity<?> getImageById(@PathVariable String fileName) throws IOException {
         return service.getImageById(fileName);
     }
 
     @Operation(summary = "Save new service.", tags = servicesTag)
-    @PostMapping(value = "/services/save/{id}", consumes = { "multipart/form-data" })
+    @PostMapping(value = "/save/{id}", consumes = { "multipart/form-data" })
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void saveService(@PathVariable UUID id, @RequestPart("services") @Valid ServicesDTO servicesDTO,
             @RequestPart("file") MultipartFile file) throws IOException {
@@ -71,7 +71,7 @@ public class ServiceController {
     }
 
     @Operation(summary = "Update by id.", tags = servicesTag)
-    @PutMapping("/services/update/{id}")
+    @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateService(@PathVariable UUID id, @RequestPart("service") ServicesDTO servicesDTO,
             @RequestPart("file") MultipartFile file) throws IOException {
@@ -79,14 +79,14 @@ public class ServiceController {
     }
 
     @Operation(summary = "Activate/Disable by id.", tags = servicesTag)
-    @PutMapping("/services/active/{id}")
+    @PutMapping("/active/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void activeById(@PathVariable UUID id, @RequestBody @Valid ActiveDTO activeDTO) {
         service.activeById(id, activeDTO);
     }
 
     @Operation(summary = "Reorder.", tags = servicesTag)
-    @PutMapping("/services/reorder")
+    @PutMapping("/reorder")
     @ResponseStatus(HttpStatus.OK)
     public void reorder(@RequestParam UUID id, @RequestParam Long currentPosition,
             @RequestParam String action)
@@ -95,7 +95,7 @@ public class ServiceController {
     }
 
     @Operation(summary = "Delete by id.", tags = servicesTag)
-    @DeleteMapping("/services/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteServiceById(@PathVariable UUID id) {
         service.deleteById(id);

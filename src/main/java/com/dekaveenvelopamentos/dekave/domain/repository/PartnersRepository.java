@@ -11,6 +11,4 @@ import com.dekaveenvelopamentos.dekave.domain.entity.Partners;
 public interface PartnersRepository extends JpaRepository<Partners, UUID> {
 
     Partners findByPartnerOrder(Long partnerOrder);
-
-    Partners findByLogo(String avatar);
 }

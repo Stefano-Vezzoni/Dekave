@@ -25,7 +25,7 @@ import com.dekaveenvelopamentos.dekave.service.ContactNumberService;
 import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
-@RequestMapping("${api.v1}")
+@RequestMapping("${api.v1}/contactnumbers")
 public class ContactNumbersController {
 
     private static final String contactNumbersTag = "Contact Numbers";
@@ -34,14 +34,14 @@ public class ContactNumbersController {
     private ContactNumberService service;
 
     @Operation(summary = "Get by id.", tags = contactNumbersTag)
-    @GetMapping("/contactnumbers/{id}")
+    @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ContactNumbers getContactNumberById(@PathVariable UUID id) {
         return service.getById(id);
     }
 
     @Operation(summary = "Get all per page and size.", tags = contactNumbersTag)
-    @GetMapping("/contactnumbers")
+    @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     public List<ContactNumbers> getAllContactNumbers(@RequestParam(required = false, defaultValue = "0") Integer page,
             @RequestParam(required = false, defaultValue = "50") Integer size) {
@@ -49,21 +49,21 @@ public class ContactNumbersController {
     }
 
     @Operation(summary = "Save new contact number.", tags = contactNumbersTag)
-    @PostMapping("/contactnumbers/save")
+    @PostMapping("/save")
     @ResponseStatus(HttpStatus.CREATED)
     public void saveContactNumber(@RequestBody @Valid ContactNumberDTO contactNumberDTO) {
         service.saveContactNumber(contactNumberDTO);
     }
 
     @Operation(summary = "Update by id.", tags = contactNumbersTag)
-    @PutMapping("/contactnumbers/update/{id}")
+    @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateContactNumber(@PathVariable UUID id, @RequestBody ContactNumberDTO contactNumberDTO) {
         service.updateContactNumber(id, contactNumberDTO);
     }
 
     @Operation(summary = "Delete by id.", tags = contactNumbersTag)
-    @DeleteMapping("/contactnumbers/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteContactNumberById(@PathVariable UUID id) {
         service.deleteById(id);

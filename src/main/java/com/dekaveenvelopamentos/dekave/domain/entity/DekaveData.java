@@ -32,5 +32,5 @@ public class DekaveData {
     private String copyright;
 
     @Column(nullable = false)
-    private String contact_message;
+    private String contactMessage;
 }

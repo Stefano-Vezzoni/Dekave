@@ -30,7 +30,7 @@ import com.dekaveenvelopamentos.dekave.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
-@RequestMapping("${api.v1}")
+@RequestMapping("${api.v1}/posts")
 public class PostsController {
 
     private static final String postsTag = "Posts";
@@ -39,14 +39,14 @@ public class PostsController {
     private PostService service;
 
     @Operation(summary = "Get by id.", tags = postsTag)
-    @GetMapping("/posts/{id}")
+    @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Posts getPostById(@PathVariable UUID id) {
         return service.getById(id);
     }
 
     @Operation(summary = "Get all per page and size.", tags = postsTag)
-    @GetMapping("/posts")
+    @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     public List<Posts> getAllPostsByServiceId(@RequestParam UUID id,
             @RequestParam(required = false, defaultValue = "0") Integer page,
@@ -55,13 +55,13 @@ public class PostsController {
     }
 
     @Operation(summary = "Get image by id.", tags = postsTag)
-    @GetMapping("/images/posts/{fileName}")
+    @GetMapping("/images/{fileName}")
     public ResponseEntity<?> getImageById(@PathVariable String fileName) throws IOException {
         return service.getImageById(fileName);
     }
 
     @Operation(summary = "Save new post.", tags = postsTag)
-    @PostMapping(value = "/posts/save/{id}", consumes = { "multipart/form-data" })
+    @PostMapping(value = "/save/{id}", consumes = { "multipart/form-data" })
     @ResponseStatus(HttpStatus.CREATED)
     public void savePost(@PathVariable UUID id, @RequestPart("post") @Valid PostDTO postDTO,
             @RequestPart("file") MultipartFile file) throws IOException {
@@ -70,7 +70,7 @@ public class PostsController {
     }
 
     @Operation(summary = "Update by id.", tags = postsTag)
-    @PutMapping(value = "/posts/update/{id}", consumes = { "multipart/form-data" })
+    @PutMapping(value = "/update/{id}", consumes = { "multipart/form-data" })
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updatePost(@PathVariable UUID id, @RequestPart("post") PostDTO postDTO,
             @RequestPart("file") MultipartFile file) throws IOException {
@@ -79,7 +79,7 @@ public class PostsController {
     }
 
     @Operation(summary = "Reorder.", tags = postsTag)
-    @PutMapping("/posts/reorder")
+    @PutMapping("/reorder")
     @ResponseStatus(HttpStatus.OK)
     public void reorder(@RequestParam UUID id, @RequestParam Long currentPosition,
             @RequestParam String action)
@@ -88,7 +88,7 @@ public class PostsController {
     }
 
     @Operation(summary = "Delete by id.", tags = postsTag)
-    @DeleteMapping("/posts/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletePostById(@PathVariable UUID id) {
         service.deleteById(id);

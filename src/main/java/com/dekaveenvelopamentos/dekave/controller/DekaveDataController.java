@@ -25,7 +25,7 @@ import com.dekaveenvelopamentos.dekave.service.DekaveDataService;
 import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
-@RequestMapping("${api.v1}")
+@RequestMapping("${api.v1}/dekavedata")
 public class DekaveDataController {
 
     private static final String dekaveDataTag = "Dekave Data";
@@ -34,14 +34,14 @@ public class DekaveDataController {
     private DekaveDataService service;
 
     @Operation(summary = "Get by id.", tags = dekaveDataTag)
-    @GetMapping("/dekavedata/{id}")
+    @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public DekaveData getDekaveDataById(@PathVariable UUID id) {
         return service.getById(id);
     }
 
     @Operation(summary = "Get all per page and size.", tags = dekaveDataTag)
-    @GetMapping("/dekavedata")
+    @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     public List<DekaveData> getAllDekaveData(@RequestParam(required = false, defaultValue = "0") Integer page,
             @RequestParam(required = false, defaultValue = "50") Integer size) {
@@ -49,21 +49,21 @@ public class DekaveDataController {
     }
 
     @Operation(summary = "Save new dekave data.", tags = dekaveDataTag)
-    @PostMapping("/dekavedata/save")
+    @PostMapping("/save")
     @ResponseStatus(HttpStatus.CREATED)
     public void saveDekaveData(@RequestBody @Valid DataDTO dataDTO) {
         service.saveDekaveData(dataDTO);
     }
 
     @Operation(summary = "Update by id.", tags = dekaveDataTag)
-    @PutMapping("/dekavedata/update/{id}")
+    @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateDekaveData(@PathVariable UUID id, @RequestBody DataDTO dataDTO) {
         service.updateDekaveData(id, dataDTO);
     }
 
     @Operation(summary = "Delete by id.", tags = dekaveDataTag)
-    @DeleteMapping("/dekavedata/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteDekaveDataById(@PathVariable UUID id) {
         service.deleteById(id);

@@ -59,7 +59,7 @@ public class DekaveDataService {
             dekaveData.setCopyright(dataDTO.getCopyright());
         }
         if (dataDTO.getContactMessage() != null) {
-            dekaveData.setContact_message(dataDTO.getContactMessage());
+            dekaveData.setContactMessage(dataDTO.getContactMessage());
         }
     }
 

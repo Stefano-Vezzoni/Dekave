@@ -28,9 +28,6 @@ public class FeedbackService {
     @Value("${images.folder.feedbacks}")
     private String path;
 
-    @Value("${base.url}")
-    private String baseUrl;
-
     @Autowired
     private FeedbacksRepository repository;
 

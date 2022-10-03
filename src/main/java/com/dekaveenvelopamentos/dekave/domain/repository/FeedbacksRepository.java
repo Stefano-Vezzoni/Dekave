@@ -11,6 +11,4 @@ import com.dekaveenvelopamentos.dekave.domain.entity.Feedbacks;
 public interface FeedbacksRepository extends JpaRepository<Feedbacks, UUID> {
 
     Feedbacks findByFeedbackOrder(Long feedbackOrder);
-
-    Feedbacks findByAvatar(String avatar);
 }
