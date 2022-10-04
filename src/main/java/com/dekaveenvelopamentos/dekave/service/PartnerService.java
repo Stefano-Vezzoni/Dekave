@@ -25,6 +25,11 @@ import com.dekaveenvelopamentos.dekave.exception.ReorderPositionException;
 @Service
 public class PartnerService {
 
+    private final String partnerRoute = "/partners/images/";
+
+    @Value("${base.url}")
+    private String baseUrl;
+
     @Value("${partners.images.dir}")
     private String imageDirectory;
 
@@ -42,7 +47,13 @@ public class PartnerService {
 
         Pageable pageable = genericService.pageableAndSort(page, size, "partnerOrder");
 
-        return repository.findAll(pageable).getContent();
+        List<Partners> partners = repository.findAll(pageable).getContent();
+
+        for (Partners feedback : partners) {
+            feedback.setLogo(baseUrl + partnerRoute + feedback.getLogo());
+        }
+
+        return partners;
     }
 
     @Transactional
@@ -59,7 +70,7 @@ public class PartnerService {
     }
 
     public ResponseEntity<?> getImageById(String fileName) throws IOException {
-        return genericService.getImageByFileName(imageDirectory + fileName);
+        return genericService.getImageByFileName(imageDirectory + "/" + fileName);
     }
 
     @Transactional

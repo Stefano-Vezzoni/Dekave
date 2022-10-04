@@ -26,9 +26,6 @@ public class GenericService {
     @Value("${resources.dir}")
     private String resourcesDirectory;
 
-    @Value("${base.url}")
-    private String baseUrl;
-
     public Pageable pageable(Integer page, Integer size) {
 
         Pageable pageable = PageRequest.of(page, size);

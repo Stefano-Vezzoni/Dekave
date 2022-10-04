@@ -25,6 +25,11 @@ import com.dekaveenvelopamentos.dekave.exception.ReorderPositionException;
 @Service
 public class FeedbackService {
 
+    private final String feedbackRoute = "/feedbacks/images/";
+
+    @Value("${base.url}")
+    private String baseUrl;
+
     @Value("${feedbacks.images.dir}")
     private String imageDirectory;
 
@@ -42,7 +47,13 @@ public class FeedbackService {
 
         Pageable pageable = genericService.pageableAndSort(page, size, "feedbackOrder");
 
-        return repository.findAll(pageable).getContent();
+        List<Feedbacks> feedbacks = repository.findAll(pageable).getContent();
+
+        for (Feedbacks feedback : feedbacks) {
+            feedback.setAvatar(baseUrl + feedbackRoute + feedback.getAvatar());
+        }
+
+        return feedbacks;
     }
 
     public ResponseEntity<?> getImageById(String fileName) throws IOException {
