@@ -35,7 +35,7 @@ import io.swagger.v3.oas.annotations.Operation;
 @RequestMapping("${api.v1}/servicetypes")
 public class ServiceTypeController {
 
-    private static final String serviceTypesTag = "Service Types";
+    final String serviceTypesTag = "Service Types";
 
     @Autowired
     private ServiceTypeService service;

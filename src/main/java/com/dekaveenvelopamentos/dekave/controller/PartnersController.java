@@ -35,7 +35,7 @@ import io.swagger.v3.oas.annotations.Operation;
 @RequestMapping("${api.v1}/partners")
 public class PartnersController {
 
-    private static final String partnersTag = "Partners";
+    final String partnersTag = "Partners";
 
     @Autowired
     private PartnerService service;

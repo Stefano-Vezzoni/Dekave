@@ -28,7 +28,7 @@ import io.swagger.v3.oas.annotations.Operation;
 @RequestMapping("${api.v1}/contactnumbers")
 public class ContactNumbersController {
 
-    private static final String contactNumbersTag = "Contact Numbers";
+    final String contactNumbersTag = "Contact Numbers";
 
     @Autowired
     private ContactNumberService service;

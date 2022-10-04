@@ -33,7 +33,7 @@ import io.swagger.v3.oas.annotations.Operation;
 @RequestMapping("${api.v1}/posts")
 public class PostsController {
 
-    private static final String postsTag = "Posts";
+    final String postsTag = "Posts";
 
     @Autowired
     private PostService service;

@@ -1,12 +1,10 @@
-package com.dekaveenvelopamentos.dekave.exception;
+package com.dekaveenvelopamentos.dekave.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor
 public enum ErrorMessageEnum {
 
     REORDER_ACTION("Essa ação é inválida."),
@@ -16,5 +14,5 @@ public enum ErrorMessageEnum {
     FILE_NOT_FOUND("O arquivo não foi encontrado ou não é válido."),
     METHOD_NOT_ALLOWED("Verifique se o verbo HTTP utilizado está correto.");
 
-    private String message;
+    private final String message;
 }

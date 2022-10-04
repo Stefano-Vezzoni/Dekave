@@ -28,7 +28,7 @@ import io.swagger.v3.oas.annotations.Operation;
 @RequestMapping("${api.v1}/dekavedata")
 public class DekaveDataController {
 
-    private static final String dekaveDataTag = "Dekave Data";
+    final String dekaveDataTag = "Dekave Data";
 
     @Autowired
     private DekaveDataService service;

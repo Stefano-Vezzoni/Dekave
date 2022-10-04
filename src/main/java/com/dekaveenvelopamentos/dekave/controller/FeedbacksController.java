@@ -35,7 +35,7 @@ import io.swagger.v3.oas.annotations.Operation;
 @RequestMapping("${api.v1}/feedbacks")
 public class FeedbacksController {
 
-    private static final String feedbacksTag = "Feedbacks";
+    final String feedbacksTag = "Feedbacks";
 
     @Autowired
     private FeedbackService service;

@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
+import com.dekaveenvelopamentos.dekave.enums.ErrorMessageEnum;
+
 @RestControllerAdvice
 public class ApiExceptionHandler {
 

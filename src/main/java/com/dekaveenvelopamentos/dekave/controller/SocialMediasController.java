@@ -29,7 +29,7 @@ import io.swagger.v3.oas.annotations.Operation;
 @RequestMapping("${api.v1}/socialmedias")
 public class SocialMediasController {
 
-    private static final String socialMediaTag = "Social Medias";
+    final String socialMediaTag = "Social Medias";
 
     @Autowired
     private SocialMediaService service;
