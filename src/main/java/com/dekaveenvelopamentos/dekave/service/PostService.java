@@ -25,8 +25,8 @@ import com.dekaveenvelopamentos.dekave.exception.ReorderPositionException;
 @Service
 public class PostService {
 
-    @Value("${images.folder.posts}")
-    private String path;
+    @Value("${posts.images.dir}")
+    private String imageDirectory;
 
     @Autowired
     private PostsRepository repository;
@@ -51,7 +51,7 @@ public class PostService {
     }
 
     public ResponseEntity<?> getImageById(String fileName) throws IOException {
-        return genericService.getImageByFileName(path + fileName);
+        return genericService.getImageByFileName(imageDirectory + fileName);
     }
 
     @Transactional
@@ -60,7 +60,7 @@ public class PostService {
         Posts post = new Posts();
 
         BeanUtils.copyProperties(postDTO, post);
-        post.setPhoto(genericService.uploadImage(path, file));
+        post.setPhoto(genericService.uploadImage(imageDirectory, file));
         post.setPostsOrder(repository.countByService(servicesRepository.findById(serviceId).get()) + 1);
         post.setService(servicesRepository.findById(serviceId).get());
 
@@ -81,7 +81,7 @@ public class PostService {
         if (file != null) {
             genericService.deleteFile(post.getPhoto());
 
-            post.setPhoto(genericService.uploadImage(path, file));
+            post.setPhoto(genericService.uploadImage(imageDirectory, file));
         }
     }
 

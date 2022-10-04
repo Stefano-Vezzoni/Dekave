@@ -32,7 +32,7 @@ import com.dekaveenvelopamentos.dekave.service.ServiceService;
 import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
-@RequestMapping("${api.v1}/services")
+@RequestMapping("/services")
 public class ServiceController {
 
     final String servicesTag = "Services";

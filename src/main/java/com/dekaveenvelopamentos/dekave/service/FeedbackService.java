@@ -25,8 +25,8 @@ import com.dekaveenvelopamentos.dekave.exception.ReorderPositionException;
 @Service
 public class FeedbackService {
 
-    @Value("${images.folder.feedbacks}")
-    private String path;
+    @Value("${feedbacks.images.dir}")
+    private String imageDirectory;
 
     @Autowired
     private FeedbacksRepository repository;
@@ -46,7 +46,7 @@ public class FeedbackService {
     }
 
     public ResponseEntity<?> getImageById(String fileName) throws IOException {
-        return genericService.getImageByFileName(path + fileName);
+        return genericService.getImageByFileName(imageDirectory + "/" + fileName);
     }
 
     @Transactional
@@ -70,7 +70,7 @@ public class FeedbackService {
         BeanUtils.copyProperties(feedbacksDTO, feedback);
         feedback.setActive(true);
         feedback.setFeedbackOrder(repository.count() + 1);
-        feedback.setAvatar(genericService.uploadImage(path, file));
+        feedback.setAvatar(genericService.uploadImage(imageDirectory, file));
 
         repository.save(feedback);
     }
@@ -91,7 +91,7 @@ public class FeedbackService {
         }
         if (file != null) {
             genericService.deleteFile(feedback.getAvatar());
-            feedback.setAvatar(genericService.uploadImage(path, file));
+            feedback.setAvatar(genericService.uploadImage(imageDirectory, file));
         }
     }
 

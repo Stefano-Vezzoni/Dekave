@@ -26,7 +26,7 @@ import com.dekaveenvelopamentos.dekave.service.SocialMediaService;
 import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
-@RequestMapping("${api.v1}/socialmedias")
+@RequestMapping("/socialmedias")
 public class SocialMediasController {
 
     final String socialMediaTag = "Social Medias";

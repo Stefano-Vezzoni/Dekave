@@ -30,7 +30,7 @@ import com.dekaveenvelopamentos.dekave.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
-@RequestMapping("${api.v1}/posts")
+@RequestMapping("/posts")
 public class PostsController {
 
     final String postsTag = "Posts";

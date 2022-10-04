@@ -26,8 +26,8 @@ import com.dekaveenvelopamentos.dekave.exception.ReorderPositionException;
 @Service
 public class ServiceService {
 
-    @Value("${images.folder.services}")
-    private String path;
+    @Value("${services.images.dir}")
+    private String imageDirectory;
 
     @Autowired
     private ServicesRepository repository;
@@ -65,7 +65,7 @@ public class ServiceService {
     }
 
     public ResponseEntity<?> getImageById(String fileName) throws IOException {
-        return genericService.getImageByFileName(path + fileName);
+        return genericService.getImageByFileName(imageDirectory + fileName);
     }
 
     @Transactional
@@ -78,7 +78,7 @@ public class ServiceService {
         service.setServiceType(serviceTypesRepository.findById(serviceTypeId).get());
         service.setServiceOrder(
                 repository.countByServiceType(serviceTypesRepository.findById(serviceTypeId).get()) + 1);
-        service.setPhoto(genericService.uploadImage(path, file));
+        service.setPhoto(genericService.uploadImage(imageDirectory, file));
 
         repository.save(service);
 
@@ -97,7 +97,7 @@ public class ServiceService {
         }
         if (file != null) {
             genericService.deleteFile(service.getPhoto());
-            service.setPhoto(genericService.uploadImage(path, file));
+            service.setPhoto(genericService.uploadImage(imageDirectory, file));
         }
     }
 

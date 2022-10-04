@@ -25,7 +25,7 @@ import com.dekaveenvelopamentos.dekave.service.DekaveDataService;
 import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
-@RequestMapping("${api.v1}/dekavedata")
+@RequestMapping("/dekavedata")
 public class DekaveDataController {
 
     final String dekaveDataTag = "Dekave Data";

@@ -23,8 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class GenericService {
 
-    @Value("${upload.file.dir}")
-    private String uploadFileDirectory;
+    @Value("${resources.dir}")
+    private String resourcesDirectory;
 
     @Value("${base.url}")
     private String baseUrl;
@@ -55,20 +55,22 @@ public class GenericService {
         }
     }
 
-    public String uploadImage(String path, MultipartFile file) throws IOException {
+    public String uploadImage(String imageDirectory, MultipartFile file) throws IOException {
 
-        File directory = new File(uploadFileDirectory + path);
+        File directory = new File(resourcesDirectory + "/" + imageDirectory);
         directory.mkdirs();
 
-        String filePath = path + UUID.randomUUID() + "_" + file.getOriginalFilename();
+        String newFileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
 
-        Path newFilePath = Path.of(uploadFileDirectory + filePath);
+        String filePath = imageDirectory + "/" + newFileName;
+
+        Path newFilePath = Path.of(resourcesDirectory + "/" + filePath);
 
         InputStream inputStream = file.getInputStream();
 
         Files.copy(inputStream, newFilePath, StandardCopyOption.REPLACE_EXISTING);
 
-        return baseUrl + filePath;
+        return newFileName;
 
     }
 

@@ -25,8 +25,8 @@ import com.dekaveenvelopamentos.dekave.exception.ReorderPositionException;
 @Service
 public class PartnerService {
 
-    @Value("${images.folder.partners}")
-    private String path;
+    @Value("${partners.images.dir}")
+    private String imageDirectory;
 
     @Autowired
     private PartnersRepository repository;
@@ -59,7 +59,7 @@ public class PartnerService {
     }
 
     public ResponseEntity<?> getImageById(String fileName) throws IOException {
-        return genericService.getImageByFileName(path + fileName);
+        return genericService.getImageByFileName(imageDirectory + fileName);
     }
 
     @Transactional
@@ -69,7 +69,7 @@ public class PartnerService {
 
         BeanUtils.copyProperties(partnersDTO, partner);
         partner.setPartnerOrder(repository.count() + 1);
-        partner.setLogo(genericService.uploadImage(path, file));
+        partner.setLogo(genericService.uploadImage(imageDirectory, file));
 
         repository.save(partner);
     }
@@ -84,7 +84,7 @@ public class PartnerService {
         }
         if (file != null) {
             genericService.deleteFile(partner.getLogo());
-            partner.setLogo(genericService.uploadImage(path, file));
+            partner.setLogo(genericService.uploadImage(imageDirectory, file));
         }
     }
 

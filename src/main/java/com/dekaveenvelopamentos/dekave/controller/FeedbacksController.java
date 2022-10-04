@@ -32,7 +32,7 @@ import com.dekaveenvelopamentos.dekave.service.FeedbackService;
 import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
-@RequestMapping("${api.v1}/feedbacks")
+@RequestMapping("/feedbacks")
 public class FeedbacksController {
 
     final String feedbacksTag = "Feedbacks";
