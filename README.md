@@ -46,7 +46,7 @@ $ cd dekave
 
 Para iniciá-lo <strong>possuindo</strong> Docker, siga os passos abaixo:
 ```bash
-#Altere no docker-compose as ENVs seguindo de modelo o env.example.
+#Altere no docker-compose as ENVs seguindo de modelo o [env.example](.env.example).
 
 # Feito isso, salve o arquivo e rode na raiz do projeto o seguinte comando pelo terminal
 $ docker-compose up -d
@@ -56,7 +56,7 @@ $ docker-compose up -d
 
 Para iniciá-lo <strong>sem</strong> Docker, siga os passos abaixo:
 ```bash
-#Renomeie o arquivo .env.example para .env e preencha de acordo.
+#Renomeie o arquivo [env.example](.env.example) para .env e preencha de acordo.
 
 # Feito isso, salve o arquivo e rode o projeto de acordo com sua IDE.
 ```
