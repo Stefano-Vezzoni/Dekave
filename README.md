@@ -1,4 +1,4 @@
-## Projeto
+## 💻 Projeto
 
 Proposta do projeto:
 A proposta do site da Dekave é apresentar serviços que foram realizados em alguns clientes, mostrando como uma galeria os serviços divididos por seus tipos.
@@ -14,7 +14,7 @@ Com essa API permitiu que o usuário gerencie:
 
 Essa versão disponibilizada é o protótipo que foi apresentado para o responsável pelo projeto, a fím de repassar ao desenvolvedor front-end para poder trabalhar em suas pendências, permitido por ele a disponibilização sob licença MIT aqui presente.
 
-## Tecnologias
+## 🧪 Tecnologias
 
  - Java
  - Spring Boot
@@ -27,14 +27,15 @@ Essa versão disponibilizada é o protótipo que foi apresentado para o respons�
  - PostgreSQL
  - Springdoc OpenAPI
 
-## Instalações necessárias
+## 🚀 Como executar
+
+
+Instalações necessárias
 
 - IDE de sua escolha
 - JDK 17.0.2
 - Apache Maven 3.8.5
 - PostgreSQL
-
-## 🚀 Como executar
 
 Clone o projeto e acesse a pasta do mesmo.
 
@@ -66,8 +67,9 @@ Para iniciá-lo <strong>sem</strong> Docker, siga os passos abaixo:
 
 - Lembrando que nesse repositório só se encontra o Back-end do projeto,  para rodar o Front-end acesse esse repositório: [Front-end](https://github.com/Jonathan-Rios/dekave.git)
 
-## Modelagem de dados
+## 🔖 Modelagem de dados
 
+A modelagem utilizada nesse protótipo foi:
 ![cover](.github/Dekave-DataModeling.png)
 
 ## 📝 License
