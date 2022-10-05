@@ -63,7 +63,7 @@ Para iniciá-lo <strong>sem</strong> Docker, siga os passos abaixo:
 
 - A API estará disponível na porta 8080, tendo disponível o [Swagger-ui](http://localhost:8080/swagger-ui/index.html#/) e para raw JSON o [Api-Docs](http://localhost:8080/v3/api-docs).
 
-- Lembrando que nesse repositório só se encontra o Back-end do projeto,  para rodar o Front-end acesse esse repositório: [Front-end](https://github.com/Jonathan-Rios/dekave.git)
+- Lembrando que nesse repositório só se encontra o Back-end do projeto,  para rodar o Front-end acesse esse repositório: [Front-end](https://github.com/Jonathan-Rios/dekave)
 
 ## 🔖 Modelagem de dados
 
