@@ -29,7 +29,6 @@ Essa versão disponibilizada é o protótipo que foi apresentado para o respons�
 
 ## 🚀 Como executar
 
-
 Instalações necessárias
 
 - IDE de sua escolha
@@ -47,7 +46,7 @@ $ cd dekave
 
 Para iniciá-lo <strong>possuindo</strong> Docker, siga os passos abaixo:
 ```bash
-#Altere no docker-compose as ENVs seguindo de modelo o [env.example](.env.example).
+#Altere no docker-compose as ENVs seguindo de modelo o .env.example.
 
 # Feito isso, salve o arquivo e rode na raiz do projeto o seguinte comando pelo terminal
 $ docker-compose up -d
@@ -57,11 +56,10 @@ $ docker-compose up -d
 
 Para iniciá-lo <strong>sem</strong> Docker, siga os passos abaixo:
 ```bash
-#Renomeie o arquivo [env.example](.env.example) para .env e preencha de acordo.
+#Renomeie o arquivo env.example para .env e preencha de acordo.
 
 # Feito isso, salve o arquivo e rode o projeto de acordo com sua IDE.
 ```
-
 
 - A API estará disponível na porta 8080, tendo disponível o [Swagger-ui](http://localhost:8080/swagger-ui/index.html#/) e para raw JSON o [Api-Docs](http://localhost:8080/v3/api-docs).
 
