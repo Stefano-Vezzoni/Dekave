@@ -6,10 +6,12 @@
 
  - Spring Boot
  - Spring Data Jpa
- - WebService
  - Rest Api
- - PostgreSQL
+ - WebService
+ - Upload/Download
+ - Validation
  - Lombok
+ - PostgreSQL
  - Springdoc OpenAPI
 
 ## Instalações necessárias
