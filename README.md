@@ -75,7 +75,7 @@ A modelagem utilizada nesse protótipo foi:
 Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE.MD)
 para mais detalhes.
 
-💠 NeverStopLearning 💠https://www.linkedin.com/in/stefano-vezzoni-santos/
+💠 NeverStopLearning 💠
 
-[![Linkedin Badge](https://img.shields.io/badge/-Stefano-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/stefano-vezzoni-santos/)](https://www.linkedin.com/in/stefano-vezzoni-b18806186/) 
+[![Linkedin Badge](https://img.shields.io/badge/-Stefano-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/stefano-vezzoni-santos/)](https://www.linkedin.com/in/stefano-vezzoni-santos/) 
 [![Gmail Badge](https://img.shields.io/badge/-stefanov.santos@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:stefanov.santos@gmail.com)](mailto:stefanov.santos@gmail.com)
